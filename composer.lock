@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "ed90fd6a4215ee2efad6b41cc3da3284",
+    "content-hash": "8129b1d71f07866af6f28425e41be98b",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -2553,6 +2553,96 @@
                 "search"
             ],
             "time": "2017-08-08T18:38:39+00:00"
+        },
+        {
+            "name": "venturecraft/revisionable",
+            "version": "1.28.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/VentureCraft/revisionable.git",
+                "reference": "5a76d29b897d4864cef41c605e7e03258dd5d051"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/VentureCraft/revisionable/zipball/5a76d29b897d4864cef41c605e7e03258dd5d051",
+                "reference": "5a76d29b897d4864cef41c605e7e03258dd5d051",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "~4.0|~5.0|~5.1",
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/migrations"
+                ],
+                "psr-0": {
+                    "Venturecraft\\Revisionable": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Chris Duell",
+                    "email": "me@chrisduell.com"
+                }
+            ],
+            "description": "Keep a revision history for your models without thinking, created as a package for use with Laravel",
+            "homepage": "http://github.com/venturecraft/revisionable",
+            "keywords": [
+                "ardent",
+                "history",
+                "laravel",
+                "model",
+                "revision"
+            ],
+            "time": "2016-08-02T02:32:00+00:00"
+        },
+        {
+            "name": "vi-kon/laravel-diff",
+            "version": "v1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/vi-kon/laravel-diff.git",
+                "reference": "936d23a2031c3629017f1a77622a67f712cfc530"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/vi-kon/laravel-diff/zipball/936d23a2031c3629017f1a77622a67f712cfc530",
+                "reference": "936d23a2031c3629017f1a77622a67f712cfc530",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.9"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "ViKon\\Diff\\": "src/ViKon/Diff"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kovács Vince",
+                    "email": "vincekovacs@hotmail.com"
+                }
+            ],
+            "description": "Diff tool for Laravel 5",
+            "homepage": "https://github.com/vi-kon/laravel-diff",
+            "keywords": [
+                "compare",
+                "diff",
+                "laravel"
+            ],
+            "time": "2016-01-09T22:37:51+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
