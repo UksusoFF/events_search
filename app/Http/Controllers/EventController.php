@@ -17,4 +17,11 @@ class EventController extends Controller
                 ->paginate(),
         ]);
     }
+
+    public function show(Request $request, Event $event)
+    {
+        return view('events.show', [
+            'event' => $event,
+        ]);
+    }
 }

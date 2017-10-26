@@ -8,6 +8,7 @@
                 <thead>
                 <tr>
                     <th>Name</th>
+                    <th>Image</th>
                     <th class="text-right">@sortablelink('created_at')</th>
                     <th class="text-right">@sortablelink('updated_at')</th>
                     <th class="text-right">@sortablelink('start_date')</th>
@@ -15,8 +16,9 @@
                 </thead>
                 <tbody>
                 @foreach ($events as $event)
-                    <tr>
+                    <tr onclick="window.open('https://vk.com/event{{ $event->vid }}');">
                         <td>{{ $event->name }}</td>
+                        <td><img src="{{ $event->photo_200 }}"></td>
                         <td class="text-right">{{ $event->created_at->format('Y-m-d H:i:s') }}</td>
                         <td class="text-right">{{ $event->updated_at->format('Y-m-d H:i:s') }}</td>
                         <td class="text-right">{{ $event->start_date->format('Y-m-d H:i:s') }}</td>

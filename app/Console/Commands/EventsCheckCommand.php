@@ -25,6 +25,7 @@ class EventsCheckCommand extends Command
                     'id',
                     'name',
                     'description',
+                    'photo_200',
                     'start_date',
                 ]);
         });
@@ -34,12 +35,16 @@ class EventsCheckCommand extends Command
             if (!$event) {
                 $event = new Event([
                     'vid' => $vkEvent['id'],
-                    'name' => $vkEvent['name'],
-                    'description' => $vkEvent['description'],
-                    'start_date' => $vkEvent['start_date'],
+                    'ignored' => false,
                 ]);
             }
-            $event->fill($vkEvent);
+            $event->fill([
+                'name' => $vkEvent['name'],
+                'description' => $vkEvent['description'],
+                'photo_200' => $vkEvent['photo_200'],
+                'start_date' => $vkEvent['start_date'],
+                'checked' => false,
+            ]);
             $event->save();
         }
     }

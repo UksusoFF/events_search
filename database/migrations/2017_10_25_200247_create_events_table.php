@@ -13,10 +13,12 @@ class CreateEventsTable extends Migration
             $table->string('vid');
             $table->string('name');
             $table->longText('description');
-            $table->timestamp('start_date');
+            $table->longText('photo_200');
+            $table->timestamp('start_date')->nullable();
             $table->boolean('checked');
             $table->boolean('ignored');
-            $table->timestamps();
+            $table->timestamp('updated_at')->useCurrent();
+            $table->timestamp('created_at')->useCurrent();
         });
     }
 
