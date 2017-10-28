@@ -43,8 +43,10 @@ class EventsCheckCommand extends Command
                 'description' => $vkEvent['description'],
                 'photo_200' => $vkEvent['photo_200'],
                 'start_date' => $vkEvent['start_date'],
-                'checked' => false,
             ]);
+            if ($event->isDirty()) {
+                //TODO: Clean check marks.
+            }
             $event->save();
         }
     }

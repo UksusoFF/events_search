@@ -3,11 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Event;
+use App\EventCheckMark;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class EventController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index(Request $request)
     {
         return view('events.index', [
@@ -23,5 +29,16 @@ class EventController extends Controller
         return view('events.show', [
             'event' => $event,
         ]);
+    }
+
+    public function read(Request $request, Event $event)
+    {
+        $eventCheckMark = new EventCheckMark([
+            'event_id' => $event->id,
+            'user_id' => auth()->id(),
+        ]);
+        $eventCheckMark->save();
+
+        return redirect()->back();
     }
 }

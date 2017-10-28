@@ -15,7 +15,6 @@ class CreateEventsTable extends Migration
             $table->longText('description');
             $table->longText('photo_200');
             $table->timestamp('start_date')->nullable();
-            $table->boolean('checked');
             $table->boolean('ignored');
             $table->timestamp('updated_at')->useCurrent();
             $table->timestamp('created_at')->useCurrent();
