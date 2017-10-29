@@ -45,7 +45,7 @@ class EventsCheckCommand extends Command
                 'start_date' => $vkEvent['start_date'],
             ]);
             if ($event->isDirty()) {
-                //TODO: Clean check marks.
+                $event->checkMarks()->delete();
             }
             $event->save();
         }
