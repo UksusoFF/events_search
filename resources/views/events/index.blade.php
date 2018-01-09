@@ -4,6 +4,7 @@
     <div class="row">
         <div class="col-sm-2">
             <h2>{{ $events->total() }}</h2>
+            <a href="{{ action('EventController@check') }}" class="btn btn-info">Run check</a>
             @include('partials.link_filter', ['params' => [
                 'key' => 'created_at',
                 'value' => 'today',
@@ -23,15 +24,23 @@
             @foreach([
                 'Подвал|Podval',
                 'Houston|Хьюстон',
+                'Тарелка|Tarelka',
                 'Звезда|Zvezda',
                 'Чайковский',
+                'Кандинский',
+                'Росомаха|Wolverine',
+                'Ветерок',
                 'Bridge|Бридж',
                 'Zombie|Зомби',
-                'Труба|Truba',
-                'CloudCafe|Cloud Cafe|Cloud',
+                'Труба|Truba|Трубе',
+                'Cloud Cafe|CloudCafe|Cloud',
                 'Кинап|Kinup',
                 'Абориген|Aborigen',
                 'Хендрикс|Hendrix',
+                'Дом 77|Дом77',
+                'Чапаевская|Чапаевской',
+                'Движение|Движении',
+                'ЦСМ|Центр социализации молодежи',
                 'ОДО',
             ] as $search)
                 @include('partials.link_filter', ['params' => [

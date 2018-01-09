@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Event;
 use App\EventCheckMark;
+use Artisan;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -40,5 +41,12 @@ class EventController extends Controller
         $eventCheckMark->save();
 
         return redirect()->back();
+    }
+
+    public function check(Request $request)
+    {
+        Artisan::call('events:check');
+
+        return redirect()->action('EventController@index');
     }
 }
