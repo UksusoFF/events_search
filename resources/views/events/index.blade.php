@@ -48,6 +48,11 @@
             ])
         </div>
         <div class="col-sm-10">
+            @if(session()->has('message'))
+                <div class="alert alert-{{ session()->get('message')['success'] ? 'success' : 'danger' }}" role="alert">
+                    {{ session()->get('message')['text'] }}
+                </div>
+            @endif
             {{ $events->appends(request()->except('page'))->links() }}
             @if ($events->count())
                 <div class="table-responsive">

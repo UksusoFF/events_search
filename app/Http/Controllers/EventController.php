@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Components\EventComponent;
 use App\Event;
 use App\EventCheckMark;
-use Artisan;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\Request;
 
 class EventController extends Controller
@@ -44,10 +45,25 @@ class EventController extends Controller
         return redirect()->back();
     }
 
-    public function check(Request $request)
+    public function check(Request $request, EventComponent $eventComponent)
     {
-        Artisan::call('events:check');
+        try {
+            $eventComponent->refresh();
 
-        return redirect()->action('EventController@index');
+            $result = [
+                'success' => true,
+                'text' => 'Events successfully updated!',
+            ];
+        } catch (Exception $e) {
+            logger()->error($e->getMessage());
+            $result = [
+                'success' => false,
+                'text' => $e->getMessage(),
+            ];
+        }
+
+        return redirect()->action('EventController@index')->with([
+            'message' => $result,
+        ]);
     }
 }
