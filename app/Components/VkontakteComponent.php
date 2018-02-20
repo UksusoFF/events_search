@@ -42,7 +42,7 @@ class VkontakteComponent
             throw new Exception('VK Api Error: ' . $response['error']['error_msg']);
         }
 
-        return $response;
+        return $response['response'];
     }
 
     /**
