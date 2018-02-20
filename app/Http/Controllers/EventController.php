@@ -22,6 +22,7 @@ class EventController extends Controller
                 ->filter($request->input('f', []))
                 ->sortable(['created_at'])
                 ->paginate(),
+            'tags' => auth()->user()->tags,
         ]);
     }
 

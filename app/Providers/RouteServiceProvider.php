@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Event;
+use App\Tag;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Route;
 
@@ -15,12 +16,11 @@ class RouteServiceProvider extends ServiceProvider
         parent::boot();
 
         Route::model('event', Event::class);
+        Route::model('tag', Tag::class);
     }
 
     public function map()
     {
-        $this->mapApiRoutes();
-
         $this->mapWebRoutes();
     }
 
@@ -29,13 +29,5 @@ class RouteServiceProvider extends ServiceProvider
         Route::middleware('web')
             ->namespace($this->namespace)
             ->group(base_path('routes/web.php'));
-    }
-
-    protected function mapApiRoutes()
-    {
-        Route::prefix('api')
-            ->middleware('api')
-            ->namespace($this->namespace)
-            ->group(base_path('routes/api.php'));
     }
 }

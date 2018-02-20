@@ -21,34 +21,31 @@
                 'title' => 'Unread',
             ]])
             <hr>
-            @foreach([
-                'Подвал|Podval',
-                'Houston|Хьюстон',
-                'Тарелка|Tarelka',
-                'Звезда|Zvezda',
-                'Чайковский',
-                'Кандинский',
-                'Росомаха|Wolverine',
-                'Ветерок',
-                'Bridge|Бридж',
-                'Zombie|Зомби',
-                'Труба|Truba|Трубе',
-                'Cloud Cafe|CloudCafe|Cloud',
-                'Кинап|Kinup',
-                'Абориген|Aborigen',
-                'Хендрикс|Hendrix',
-                'Дом 77|Дом77',
-                'Чапаевская|Чапаевской',
-                'Движение|Движении',
-                'ЦСМ|Центр социализации молодежи',
-                'ОДО',
-            ] as $search)
-                @include('partials.link_filter', ['params' => [
-                    'key' => 'search',
-                    'value' => $search,
-                    'title' => $search,
-                ]])
+            @foreach($tags as $tag)
+                <div>
+                    @include('partials.link_filter', ['params' => [
+                        'key' => 'search',
+                        'value' => $tag->name,
+                        'title' => head(explode('|', $tag->name)),
+                    ]])
+
+                    @include('events.tag_create_edit', [
+                        'action' => action('TagController@update', [
+                            'tag' => $tag
+                        ]),
+                        'id' => "edit-$tag->id",
+                        'tagName' => $tag->name,
+                        'icon' => 'pencil',
+                    ])
+                </div>
             @endforeach
+
+            @include('events.tag_create_edit', [
+                'action' => action('TagController@store'),
+                'id' => 'create',
+                'tagName' => '',
+                'icon' => 'plus',
+            ])
         </div>
         <div class="col-sm-10">
             {{ $events->appends(request()->except('page'))->links() }}

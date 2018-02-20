@@ -19,4 +19,9 @@ Route::prefix('events')->group(function () {
     Route::get('{event}/read', 'EventController@read');
 });
 
+Route::prefix('tags')->group(function () {
+    Route::post('store', 'TagController@store');
+    Route::post('{tag}/update', 'TagController@update');
+});
+
 Auth::routes();
