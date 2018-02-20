@@ -14,25 +14,11 @@ return [
     |
     */
 
-    'mailgun' => [
-        'domain' => env('MAILGUN_DOMAIN'),
-        'secret' => env('MAILGUN_SECRET'),
-    ],
-
-    'ses' => [
-        'key' => env('SES_KEY'),
-        'secret' => env('SES_SECRET'),
-        'region' => 'us-east-1',
-    ],
-
-    'sparkpost' => [
-        'secret' => env('SPARKPOST_SECRET'),
-    ],
-
-    'stripe' => [
-        'model' => App\User::class,
-        'key' => env('STRIPE_KEY'),
-        'secret' => env('STRIPE_SECRET'),
+    'vkontakte' => [
+        'version' => '5.71',
+        'client_id' => env('VKONTAKTE_APP_KEY'),
+        'client_secret' => env('VKONTAKTE_APP_SECRET'),
+        'redirect' => env('APP_URL', 'http://localhost') . '/social-auth/callback/vkontakte',
     ],
 
 ];

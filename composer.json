@@ -1,7 +1,7 @@
 {
-    "name": "UksusoFF/laravel-vk_search",
-    "description": "The Vkontakte Search System",
-    "keywords": ["tickets", "laravel"],
+    "name": "UksusoFF/vk_events_search",
+    "description": "Vkontakte Events Search System",
+    "keywords": ["laravel"],
     "license": "MIT",
     "type": "project",
     "require": {
@@ -12,6 +12,7 @@
         "kyslik/column-sortable": "^5.5",
         "laravel/framework": "5.5.*",
         "laravel/tinker": "~1.0",
+        "socialiteproviders/vkontakte": "^3.0",
         "tucker-eric/eloquentfilter": "^1.2",
         "venturecraft/revisionable": "^1.28",
         "vi-kon/laravel-diff": "^1.0"

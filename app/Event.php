@@ -10,6 +10,7 @@ use Venturecraft\Revisionable\RevisionableTrait as Revisionable;
 /**
  * App\Event
  *
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\EventCheckMark[] $checkMarks
  * @property-read \Illuminate\Database\Eloquent\Collection|\Venturecraft\Revisionable\Revision[] $revisionHistory
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Event filter($input = array(), $filter = null)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Event paginateFilter($perPage = null, $columns = array(), $pageName = 'page', $page = null)
