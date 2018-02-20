@@ -20,7 +20,7 @@ class EventController extends Controller
         return view('events.index', [
             'events' => Event::where('start_date', '>=', Carbon::now())
                 ->filter($request->input('f', []))
-                ->sortable(['created_at'])
+                ->sortable(['start_date'])
                 ->paginate(),
             'tags' => auth()->user()->tags,
         ]);
