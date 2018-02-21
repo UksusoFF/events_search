@@ -7,11 +7,6 @@ use Illuminate\Http\Request;
 
 class TagController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     public function store(Request $request)
     {
         $tag = new Tag([
@@ -25,7 +20,6 @@ class TagController extends Controller
 
     public function update(Request $request, Tag $tag)
     {
-
         $tag->fill([
             'name' => $request->input('name'),
         ]);

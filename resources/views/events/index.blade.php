@@ -3,6 +3,37 @@
 @section('content')
     <div class="row">
         <div class="col-sm-2">
+            <div class="text-center">
+                <a href="#edit-profile" data-toggle="modal">
+                    <img src="{{ auth()->user()->avatar }}" class="rounded">
+                </a>
+            </div>
+            <div id="edit-profile" class="modal fade">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            Edit personal settings
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        </div>
+                        <form action="{{ action('AuthController@update') }}" method="POST">
+                            {{ csrf_field() }}
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="personal_city_id">City Id</label>
+                                    <input type="text"
+                                           class="form-control"
+                                           id="personal_city_id"
+                                           name="city_id"
+                                           value="{{ auth()->user()->city_id }}">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">Сохранить</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
             <h2>{{ $events->total() }}</h2>
             <a href="{{ action('EventController@check') }}" class="btn btn-info">Run check</a>
             @include('partials.link_filter', ['params' => [
@@ -82,7 +113,9 @@
                                 <td class="text-right">{{ $event->updated_at->format('Y-m-d H:i:s') }}</td>
                                 <td class="text-right">{{ $event->start_date->format('Y-m-d H:i:s') }}</td>
                                 <td class="text-right">
-                                    <a href="{{ action('EventController@read', $event) }}" class="btn btn-success btn-sm" title="Mark as read">
+                                    <a href="{{ action('EventController@read', $event) }}"
+                                       class="btn btn-success btn-sm"
+                                       title="Mark as read">
                                         <i class="fa fa-check" aria-hidden="true"></i>
                                     </a>
                                 </td>

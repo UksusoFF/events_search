@@ -24,4 +24,8 @@ Route::prefix('tags')->group(function () {
     Route::post('{tag}/update', 'TagController@update');
 });
 
+Route::prefix('auth')->group(function () {
+    Route::post('update', 'AuthController@update');
+});
+
 Auth::routes();

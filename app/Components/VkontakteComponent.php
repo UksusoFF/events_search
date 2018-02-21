@@ -51,7 +51,7 @@ class VkontakteComponent
      * @return mixed
      * @throws Exception
      */
-    public function searchEvents(string $city = '123', array $fields = ['start_date', 'description'])
+    public function searchEvents(string $city, array $fields = ['start_date', 'description'])
     {
         return $this->get('groups.search', [
             'q' => '*',
@@ -63,6 +63,6 @@ class VkontakteComponent
             'count' => '1000',
             'fields' => implode(',', $fields),
             'access_token' => env('VK_ACCESS_TOKEN'),
-        ]);
+        ])['items'];
     }
 }
