@@ -13,12 +13,25 @@ class EventController extends Controller
 {
     public function index(Request $request)
     {
+        $events = Event::where('start_date', '>=', Carbon::now());
+
+        $tags = auth()->user()->tags->map(function ($tag) use ($events) {
+            return [
+                'id' => $tag->id,
+                'name' => $tag->name,
+                'title' => head(explode('|', $tag->name)),
+                'count' => with(clone $events)
+                    ->filter(['search' => explode('|', $tag->name)])
+                    ->count(),
+            ];
+        })->sortByDesc('count');
+
         return view('events.index', [
-            'events' => Event::where('start_date', '>=', Carbon::now())
+            'events' => $events
                 ->filter($request->input('f', []))
                 ->sortable(['start_date'])
                 ->paginate(),
-            'tags' => auth()->user()->tags,
+            'tags' => $tags,
         ]);
     }
 
@@ -57,7 +70,13 @@ class EventController extends Controller
             ];
         }
 
-        return redirect()->action('EventController@index')->with([
+        return redirect()->action('EventController@index', [
+            'f' => [
+                'created_at' => [
+                    'today',
+                ],
+            ],
+        ])->with([
             'message' => $result,
         ]);
     }

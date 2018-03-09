@@ -56,16 +56,16 @@
                 <div>
                     @include('partials.link_filter', ['params' => [
                         'key' => 'search',
-                        'value' => $tag->name,
-                        'title' => head(explode('|', $tag->name)),
+                        'value' => $tag['name'],
+                        'title' => "{$tag['title']} ({$tag['count']})",
                     ]])
 
                     @include('events.tag_create_edit', [
                         'action' => action('TagController@update', [
-                            'tag' => $tag
+                            'tag' => $tag['id'],
                         ]),
-                        'id' => "edit-$tag->id",
-                        'tagName' => $tag->name,
+                        'id' => "edit-{$tag['id']}",
+                        'tagName' => $tag['name'],
                         'icon' => 'pencil',
                     ])
                 </div>
