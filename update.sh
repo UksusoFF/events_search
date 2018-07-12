@@ -21,6 +21,6 @@ else
     npm install --no-bin-links
 fi
 
-npm run build
+npm run prod
 
 php artisan up
