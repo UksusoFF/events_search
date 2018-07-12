@@ -4,5 +4,9 @@
 *.ico     -text diff
 *.jpg     -text diff
 *.png     -text diff
-*.ttf     -text diff
+*.ttf binary
+*.eot binary
+*.woff binary
+*.woff2 binary
+*.mp4 binary
 CHANGELOG.md export-ignore
