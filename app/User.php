@@ -61,6 +61,10 @@ class User extends Authenticatable
         return $this->hasMany(Tag::class);
     }
 
+    public function sources() {
+        return $this->hasMany(Source::class);
+    }
+
     public function getAvatarAttribute()
     {
         $hash = md5(strtolower(trim($this->email)));
