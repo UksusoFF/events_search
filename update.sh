@@ -18,6 +18,7 @@ else
     php artisan migrate --force
     php artisan ide-helper:generate
     php artisan ide-helper:models --write --reset
+    php vendor/friendsofphp/php-cs-fixer/php-cs-fixer fix --config=.php_cs --allow-risky=yes
     npm install --no-bin-links
 fi
 
