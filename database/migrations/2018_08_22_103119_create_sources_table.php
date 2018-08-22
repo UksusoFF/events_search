@@ -8,7 +8,7 @@ class CreateSourcesTable extends Migration
 {
     public function up()
     {
-        Schema::create('sources', function(Blueprint $table) {
+        Schema::create('sources', function (Blueprint $table) {
             $table->increments('id');
             $table->string('type');
             $table->unsignedInteger('user_id');

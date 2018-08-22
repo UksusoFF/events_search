@@ -8,7 +8,7 @@ class CreateEventCheckMarksTable extends Migration
 {
     public function up()
     {
-        Schema::create('event_check_marks', function(Blueprint $table) {
+        Schema::create('event_check_marks', function (Blueprint $table) {
             $table->unsignedInteger('event_id');
             $table->unsignedInteger('user_id');
 

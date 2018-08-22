@@ -1,4 +1,6 @@
-<?php namespace App\Http\Controllers\Admin;
+<?php
+
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -19,7 +21,8 @@ class ProfileController extends Controller
      *
      * @param  Request $request
      */
-    protected function setUser($request) {
+    protected function setUser($request)
+    {
         if (empty($request->user())) {
             abort(404, 'User not found');
         }
@@ -31,6 +34,7 @@ class ProfileController extends Controller
      * Show the form for editing logged user profile.
      *
      * @param  Request $request
+     *
      * @return  \Illuminate\Http\Response
      */
     public function editProfile(Request $request)
@@ -45,7 +49,8 @@ class ProfileController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param        \Illuminate\Http\Request  $request
+     * @param        \Illuminate\Http\Request $request
+     *
      * @return    \Illuminate\Http\Response|array
      */
     public function updateProfile(Request $request)
@@ -61,7 +66,6 @@ class ProfileController extends Controller
             'first_name' => ['nullable', 'string'],
             'last_name' => ['nullable', 'string'],
             'language' => ['sometimes', 'string'],
-            
         ]);
 
         // Sanitize input
@@ -72,7 +76,6 @@ class ProfileController extends Controller
             'first_name',
             'last_name',
             'language',
-            
         ]);
 
         // Update changed values User
@@ -89,6 +92,7 @@ class ProfileController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  Request $request
+     *
      * @return  \Illuminate\Http\Response
      */
     public function editPassword(Request $request)
@@ -100,11 +104,11 @@ class ProfileController extends Controller
         ]);
     }
 
-
     /**
      * Update the specified resource in storage.
      *
-     * @param        \Illuminate\Http\Request  $request
+     * @param        \Illuminate\Http\Request $request
+     *
      * @return    \Illuminate\Http\Response|array
      */
     public function updatePassword(Request $request)
@@ -115,13 +119,11 @@ class ProfileController extends Controller
         // Validate the request
         $this->validate($request, [
             'password' => ['sometimes', 'confirmed', 'min:7', 'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9]).*$/', 'string'],
-            
         ]);
 
         // Sanitize input
         $sanitized = $request->only([
             'password',
-            
         ]);
 
         //Modify input, set hashed password
@@ -136,5 +138,4 @@ class ProfileController extends Controller
 
         return redirect('admin/password');
     }
-
 }

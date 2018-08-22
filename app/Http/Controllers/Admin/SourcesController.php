@@ -1,4 +1,6 @@
-<?php namespace App\Http\Controllers\Admin;
+<?php
+
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Source\DestroySource;
@@ -10,7 +12,6 @@ use Brackets\AdminListing\Facades\AdminListing;
 
 class SourcesController extends Controller
 {
-
     /**
      * @param \App\Http\Requests\Admin\Source\IndexSource $request
      *
@@ -35,7 +36,6 @@ class SourcesController extends Controller
         }
 
         return view('admin.source.index', ['data' => $data]);
-
     }
 
     /**

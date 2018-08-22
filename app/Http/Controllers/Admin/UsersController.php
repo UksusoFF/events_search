@@ -1,22 +1,23 @@
-<?php namespace App\Http\Controllers\Admin;
+<?php
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+namespace App\Http\Controllers\Admin;
+
 use \Illuminate\Http\Response;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\User\DestroyUser;
 use App\Http\Requests\Admin\User\IndexUser;
 use App\Http\Requests\Admin\User\StoreUser;
 use App\Http\Requests\Admin\User\UpdateUser;
-use App\Http\Requests\Admin\User\DestroyUser;
-use Brackets\AdminListing\Facades\AdminListing;
 use App\Models\User;
-use Illuminate\Support\Facades\Config;
-use Brackets\AdminAuth\Services\ActivationService;
 use Brackets\AdminAuth\Facades\Activation;
+use Brackets\AdminAuth\Services\ActivationService;
+use Brackets\AdminListing\Facades\AdminListing;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Config;
 use Spatie\Permission\Models\Role;
 
 class UsersController extends Controller
 {
-
     /**
      * Display a listing of the resource.
      *
@@ -42,7 +43,6 @@ class UsersController extends Controller
         }
 
         return view('admin.user.index', ['data' => $data, 'activation' => Config::get('admin-auth.activations.enabled')]);
-
     }
 
     /**
@@ -54,7 +54,7 @@ class UsersController extends Controller
     {
         $this->authorize('admin.user.create');
 
-        return view('admin.user.create',[
+        return view('admin.user.create', [
             'activation' => Config::get('admin-auth.activations.enabled'),
             'roles' => Role::all(),
         ]);
@@ -132,7 +132,7 @@ class UsersController extends Controller
         $user->update($sanitized);
 
         // But we do have a roles, so we need to attach the roles to the user
-        if($request->input('roles')) {
+        if ($request->input('roles')) {
             $user->roles()->sync(collect($request->input('roles', []))->map->id->toArray());
         }
 
@@ -162,18 +162,17 @@ class UsersController extends Controller
     }
 
     /**
-    * Resend activation e-mail
-    *
-    * @param    \Illuminate\Http\Request  $request
-    * @param    User $user
-    * @return  array|\Illuminate\Http\Response
-    */
+     * Resend activation e-mail
+     *
+     * @param    \Illuminate\Http\Request  $request
+     * @param    User $user
+     * @return  array|\Illuminate\Http\Response
+     */
     public function resendActivationEmail(Request $request, ActivationService $activationService, User $user)
     {
-        if(Config::get('admin-auth.activations.enabled')) {
-
+        if (Config::get('admin-auth.activations.enabled')) {
             $response = $activationService->handle($user);
-            if($response == Activation::ACTIVATION_LINK_SENT) {
+            if ($response == Activation::ACTIVATION_LINK_SENT) {
                 if ($request->ajax()) {
                     return ['message' => trans('brackets/admin-ui::admin.operation.succeeded')];
                 }
@@ -194,5 +193,4 @@ class UsersController extends Controller
             return redirect()->back();
         }
     }
-    
 }

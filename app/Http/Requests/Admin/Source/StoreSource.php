@@ -1,8 +1,9 @@
-<?php namespace App\Http\Requests\Admin\Source;
+<?php
+
+namespace App\Http\Requests\Admin\Source;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Validation\Rule;
 
 class StoreSource extends FormRequest
 {
@@ -16,7 +17,7 @@ class StoreSource extends FormRequest
         return Gate::allows('admin.source.create');
     }
 
-/**
+    /**
      * Get the validation rules that apply to the request.
      *
      * @return  array
@@ -32,7 +33,6 @@ class StoreSource extends FormRequest
             'map_desc' => ['required', 'string'],
             'map_image' => ['required', 'string'],
             'map_date' => ['required', 'string'],
-            
         ];
     }
 }

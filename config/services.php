@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Third Party Services
@@ -20,5 +19,4 @@ return [
         'client_secret' => env('VKONTAKTE_APP_SECRET'),
         'redirect' => env('APP_URL', 'http://localhost') . '/social-auth/callback/vkontakte',
     ],
-
 ];

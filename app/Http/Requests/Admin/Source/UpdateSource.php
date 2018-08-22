@@ -1,8 +1,9 @@
-<?php namespace App\Http\Requests\Admin\Source;
+<?php
+
+namespace App\Http\Requests\Admin\Source;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Validation\Rule;
 
 class UpdateSource extends FormRequest
 {
@@ -16,7 +17,7 @@ class UpdateSource extends FormRequest
         return Gate::allows('admin.source.edit', $this->source);
     }
 
-/**
+    /**
      * Get the validation rules that apply to the request.
      *
      * @return  array
@@ -32,7 +33,6 @@ class UpdateSource extends FormRequest
             'map_desc' => ['sometimes', 'string'],
             'map_image' => ['sometimes', 'string'],
             'map_date' => ['sometimes', 'string'],
-            
         ];
     }
 }

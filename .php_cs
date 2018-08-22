@@ -35,7 +35,7 @@ return PhpCsFixer\Config::create()
         //'ordered_class_elements' => true,
         'function_declaration' => true,
         'include' => true,
-        'lowercase_constants' => false,
+        'lowercase_constants' => true,
         'lowercase_keywords' => true,
         'method_argument_space' => true,
         'trailing_comma_in_multiline_array' => true,
@@ -54,6 +54,7 @@ return PhpCsFixer\Config::create()
         'phpdoc_trim' => true,
         'phpdoc_var_without_name' => true,
         'self_accessor' => true,
+        'array_indentation' => true,
         'array_syntax' => [
             'syntax' => 'short',
         ],
@@ -69,13 +70,18 @@ return PhpCsFixer\Config::create()
         'no_trailing_whitespace' => true,
         'no_trailing_whitespace_in_comment' => true,
         'no_whitespace_in_blank_line' => true,
+        'no_whitespace_before_comma_in_array' => true,
         'trim_array_spaces' => true,
         'method_separation' => true,
+        'line_ending' => true,
         'ordered_imports' => [
             'sortAlgorithm' => 'alpha',
         ],
         'new_with_braces' => true,
         'phpdoc_types' => true,
+        'no_extra_blank_lines' => [
+            'tokens' => ['square_brace_block']
+        ]
     ])
     ->setFinder($finder)
     ->setUsingCache(false);

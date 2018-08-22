@@ -45,7 +45,7 @@ class EventFilter extends ModelFilter
     public function search($search)
     {
         $searchParts = explode('|', implode('|', $search));
-        return $this->where(function($query) use ($searchParts) {
+        return $this->where(function ($query) use ($searchParts) {
             foreach ($searchParts as $searchPart) {
                 $query->orWhere('description', 'LIKE', '%' . $searchPart . '%')
                     ->orWhere('name', 'LIKE', '%' . $searchPart . '%');

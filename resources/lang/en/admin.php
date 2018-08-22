@@ -13,21 +13,20 @@ return [
         ],
 
         'columns' => [
-            'id' => "ID",
-            'email' => "Email",
-            'password' => "Password",
-            'password_repeat' => "Password Confirmation",
-            'city_id' => "City id",
-            'token' => "Token",
-            'first_name' => "First name",
-            'last_name' => "Last name",
-            'activated' => "Activated",
-            'forbidden' => "Forbidden",
-            'language' => "Language",
-                
+            'id' => 'ID',
+            'email' => 'Email',
+            'password' => 'Password',
+            'password_repeat' => 'Password Confirmation',
+            'city_id' => 'City id',
+            'token' => 'Token',
+            'first_name' => 'First name',
+            'last_name' => 'Last name',
+            'activated' => 'Activated',
+            'forbidden' => 'Forbidden',
+            'language' => 'Language',
+
             //Belongs to many relations
-            'roles' => "Roles",
-                
+            'roles' => 'Roles',
         ],
     ],
 
@@ -41,16 +40,15 @@ return [
         ],
 
         'columns' => [
-            'id' => "ID",
-            'type' => "Type",
-            'user_id' => "User id",
-            'source' => "Source",
-            'map_id' => "Map id",
-            'map_title' => "Map title",
-            'map_desc' => "Map desc",
-            'map_image' => "Map image",
-            'map_date' => "Map date",
-            
+            'id' => 'ID',
+            'type' => 'Type',
+            'user_id' => 'User id',
+            'source' => 'Source',
+            'map_id' => 'Map id',
+            'map_title' => 'Map title',
+            'map_desc' => 'Map desc',
+            'map_image' => 'Map image',
+            'map_date' => 'Map date',
         ],
     ],
 

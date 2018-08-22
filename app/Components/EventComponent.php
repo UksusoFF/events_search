@@ -27,12 +27,12 @@ class EventComponent
 
             $vkEvents = $vkEvents->filter(function ($vkEvent) {
                 return !$vkEvent['is_closed'] && array_has($vkEvent, [
-                        'id',
-                        'name',
-                        'description',
-                        'photo_200',
-                        'start_date',
-                    ]);
+                    'id',
+                    'name',
+                    'description',
+                    'photo_200',
+                    'start_date',
+                ]);
             });
 
             foreach ($vkEvents as $vkEvent) {

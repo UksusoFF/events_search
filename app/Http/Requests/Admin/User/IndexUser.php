@@ -1,4 +1,6 @@
-<?php namespace App\Http\Requests\Admin\User;
+<?php
+
+namespace App\Http\Requests\Admin\User;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Gate;
@@ -28,7 +30,6 @@ class IndexUser extends FormRequest
             'search' => 'string|nullable',
             'page' => 'integer|nullable',
             'per_page' => 'integer|nullable',
-
         ];
     }
 }

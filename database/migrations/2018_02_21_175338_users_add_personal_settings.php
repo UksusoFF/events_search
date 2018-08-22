@@ -8,7 +8,7 @@ class UsersAddPersonalSettings extends Migration
 {
     public function up()
     {
-        Schema::table('users', function(Blueprint $table) {
+        Schema::table('users', function (Blueprint $table) {
             $table->text('city_id')->nullable();
             $table->text('token')->nullable();
         });
@@ -16,7 +16,7 @@ class UsersAddPersonalSettings extends Migration
 
     public function down()
     {
-        Schema::table('users', function(Blueprint $table) {
+        Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('city_id');
             $table->dropColumn('token');
         });

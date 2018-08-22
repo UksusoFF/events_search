@@ -13,36 +13,32 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements CanActivateContract
 {
-
     use Notifiable;
     use CanActivate;
     use SoftDeletes;
     use HasRoles;
 
     protected $fillable = [
-        "email",
-        "password",
-        "city_id",
-        "token",
-        "first_name",
-        "last_name",
-        "activated",
-        "forbidden",
-        "language",
-
+        'email',
+        'password',
+        'city_id',
+        'token',
+        'first_name',
+        'last_name',
+        'activated',
+        'forbidden',
+        'language',
     ];
 
     protected $hidden = [
-        "password",
-        "remember_token",
-
+        'password',
+        'remember_token',
     ];
 
     protected $dates = [
-        "created_at",
-        "updated_at",
-        "deleted_at",
-
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
 
     protected $appends = [
@@ -91,5 +87,4 @@ class User extends Authenticatable implements CanActivateContract
     {
         return $this->hasMany(Source::class);
     }
-
 }

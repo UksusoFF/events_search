@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     /*
      * Language lines will be fetched by these loaders. You can put any class here that implements
      * the Brackets\AdminTranslations\TranslationLoaders\TranslationLoader-interface.
@@ -34,5 +33,4 @@ return [
         base_path('vendor/brackets/admin-auth/src'),
         base_path('vendor/brackets/admin-auth/resources'),
     ],
-
 ];

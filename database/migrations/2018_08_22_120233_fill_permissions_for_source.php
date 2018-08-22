@@ -12,12 +12,12 @@ class FillPermissionsForSource extends Migration
     {
         //New permissions
         $this->permissions = [
-            ['name' => 'admin.source',],
-            ['name' => 'admin.source.index',],
-            ['name' => 'admin.source.create',],
-            ['name' => 'admin.source.show',],
-            ['name' => 'admin.source.edit',],
-            ['name' => 'admin.source.delete',],
+            ['name' => 'admin.source'],
+            ['name' => 'admin.source.index'],
+            ['name' => 'admin.source.create'],
+            ['name' => 'admin.source.show'],
+            ['name' => 'admin.source.edit'],
+            ['name' => 'admin.source.delete'],
         ];
 
         //Role should already exists
@@ -39,7 +39,7 @@ class FillPermissionsForSource extends Migration
     public function up()
     {
         app()['cache']->forget('spatie.permission.cache');
-        DB::transaction(function() {
+        DB::transaction(function () {
             foreach ($this->permissions as $permission) {
                 $permission = array_merge($permission, [
                     'guard_name' => config('auth.defaults.guard'),
@@ -77,7 +77,7 @@ class FillPermissionsForSource extends Migration
     public function down()
     {
         app()['cache']->forget('spatie.permission.cache');
-        DB::transaction(function() {
+        DB::transaction(function () {
             foreach ($this->permissions as $permission) {
                 if (!empty($permissionItem = DB::table('permissions')->where('name', '=', $permission['name'])->first())) {
                     DB::table('permissions')->where('id', '=', $permissionItem->id)->delete();

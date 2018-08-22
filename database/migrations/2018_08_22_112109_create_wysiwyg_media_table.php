@@ -8,7 +8,7 @@ class CreateWysiwygMediaTable extends Migration
 {
     public function up()
     {
-        Schema::create('wysiwyg_media', function(Blueprint $table) {
+        Schema::create('wysiwyg_media', function (Blueprint $table) {
             $table->increments('id');
             $table->string('file_path');
             $table->unsignedInteger('wysiwygable_id')->nullable()->index();

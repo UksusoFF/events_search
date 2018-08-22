@@ -32,7 +32,7 @@ class FillDefaultUserAndPermissions extends Migration
         ]);
 
         //Add new teams
-        $this->permissions = $defaultPermissions->map(function($permission) {
+        $this->permissions = $defaultPermissions->map(function ($permission) {
             return [
                 'name' => $permission,
                 'guard_name' => config('auth.defaults.guard'),
@@ -59,7 +59,7 @@ class FillDefaultUserAndPermissions extends Migration
                 'last_name' => 'Administrator',
                 'email' => 'administrator@brackets.sk',
                 'password' => Hash::make(str_random(10)),
-                'remember_token' => NULL,
+                'remember_token' => null,
                 'created_at' => \Carbon\Carbon::now(),
                 'updated_at' => \Carbon\Carbon::now(),
                 'activated' => true,
@@ -75,7 +75,7 @@ class FillDefaultUserAndPermissions extends Migration
 
     public function up()
     {
-        DB::transaction(function() {
+        DB::transaction(function () {
             foreach ($this->permissions as $permission) {
                 DB::table('permissions')->insert($permission);
             }
@@ -126,7 +126,7 @@ class FillDefaultUserAndPermissions extends Migration
 
     public function down()
     {
-        DB::transaction(function() {
+        DB::transaction(function () {
             foreach ($this->users as $user) {
                 if (!empty($userItem = DB::table('users')->where('email', '=', $user['email'])->first())) {
                     DB::table('users')->where('id', '=', $userItem->id)->delete();

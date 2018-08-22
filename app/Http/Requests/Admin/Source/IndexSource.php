@@ -1,4 +1,6 @@
-<?php namespace App\Http\Requests\Admin\Source;
+<?php
+
+namespace App\Http\Requests\Admin\Source;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Gate;
@@ -28,7 +30,6 @@ class IndexSource extends FormRequest
             'search' => 'string|nullable',
             'page' => 'integer|nullable',
             'per_page' => 'integer|nullable',
-
         ];
     }
 }
