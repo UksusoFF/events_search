@@ -1,16 +1,16 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * App\EventCheckMark
+ * App\Models\EventCheckMark
  *
  * @property int $event_id
  * @property int $user_id
- * @method static \Illuminate\Database\Eloquent\Builder|\App\EventCheckMark whereEventId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\EventCheckMark whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\EventCheckMark whereEventId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\EventCheckMark whereUserId($value)
  * @mixin \Eloquent
  */
 class EventCheckMark extends Model

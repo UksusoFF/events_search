@@ -3,7 +3,10 @@
 /public/storage
 /storage/*.key
 /vendor
-/.idea
+/.idea/*
+!/.idea/codeStyles/codeStyleConfig.xml
+!/.idea/codeStyles/Project.xml
+!/.idea/laravel-plugin.xml
 /.vagrant
 Homestead.json
 Homestead.yaml

@@ -15,6 +15,7 @@ $finder = PhpCsFixer\Finder::create()
         __DIR__ . '/app',
         __DIR__ . '/config',
         __DIR__ . '/database/migrations',
+        __DIR__ . '/database/factories',
         __DIR__ . '/routes',
         __DIR__ . '/resources/lang',
     ]);

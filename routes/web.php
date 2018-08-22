@@ -58,3 +58,13 @@ Route::middleware(['admin'])->group(function () {
     Route::post('/admin/sources/{source}', 'Admin\SourcesController@update')->name('admin/sources/update');
     Route::delete('/admin/sources/{source}', 'Admin\SourcesController@destroy')->name('admin/sources/destroy');
 });
+
+/* Auto-generated admin routes */
+Route::middleware(['admin'])->group(function () {
+    Route::get('/admin/events', 'Admin\EventsController@index');
+    Route::get('/admin/events/create', 'Admin\EventsController@create');
+    Route::post('/admin/events', 'Admin\EventsController@store');
+    Route::get('/admin/events/{event}/edit', 'Admin\EventsController@edit')->name('admin/events/edit');
+    Route::post('/admin/events/{event}', 'Admin\EventsController@update')->name('admin/events/update');
+    Route::delete('/admin/events/{event}', 'Admin\EventsController@destroy')->name('admin/events/destroy');
+});

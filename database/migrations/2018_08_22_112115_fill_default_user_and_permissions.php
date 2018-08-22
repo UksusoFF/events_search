@@ -2,11 +2,9 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 
 class FillDefaultUserAndPermissions extends Migration
 {
-    protected $users;
     protected $roles;
     protected $permissions;
 
@@ -51,26 +49,6 @@ class FillDefaultUserAndPermissions extends Migration
                 'permissions' => $defaultPermissions,
             ],
         ];
-
-        //Add new teams
-        $this->users = [
-            [
-                'first_name' => 'Administrator',
-                'last_name' => 'Administrator',
-                'email' => 'administrator@brackets.sk',
-                'password' => Hash::make(str_random(10)),
-                'remember_token' => null,
-                'created_at' => \Carbon\Carbon::now(),
-                'updated_at' => \Carbon\Carbon::now(),
-                'activated' => true,
-                'roles' => [
-                    'Administrator',
-                ],
-                'permissions' => [
-                    //
-                ],
-            ],
-        ];
     }
 
     public function up()
@@ -95,28 +73,14 @@ class FillDefaultUserAndPermissions extends Migration
                 }
             }
 
-            foreach ($this->users as $user) {
-                $roles = $user['roles'];
-                unset($user['roles']);
-                $permissions = $user['permissions'];
-                unset($user['permissions']);
-
-                $userId = DB::table('users')->insertGetId($user);
-
-                $roleItems = DB::table('roles')->whereIn('name', $roles)->get();
+            foreach (DB::table('users')->get() as $user) {
+                $roleItems = DB::table('roles')->whereIn('name', [
+                    'Administrator',
+                ])->get();
                 foreach ($roleItems as $roleItem) {
                     DB::table('model_has_roles')->insert([
                         'role_id' => $roleItem->id,
-                        'model_id' => $userId,
-                        'model_type' => 'App\Models\User',
-                    ]);
-                }
-
-                $permissionItems = DB::table('permissions')->whereIn('name', $permissions)->get();
-                foreach ($permissionItems as $permissionItem) {
-                    DB::table('model_has_permissions')->insert([
-                        'permission_id' => $permissionItem->id,
-                        'model_id' => $userId,
+                        'model_id' => $user->id,
                         'model_type' => 'App\Models\User',
                     ]);
                 }
@@ -127,13 +91,8 @@ class FillDefaultUserAndPermissions extends Migration
     public function down()
     {
         DB::transaction(function () {
-            foreach ($this->users as $user) {
-                if (!empty($userItem = DB::table('users')->where('email', '=', $user['email'])->first())) {
-                    DB::table('users')->where('id', '=', $userItem->id)->delete();
-                    DB::table('model_has_permissions')->where('model_id', '=', $userItem->id)->where('model_type', '=', 'App\Models\User')->delete();
-                    DB::table('model_has_roles')->where('model_id', '=', $userItem->id)->where('model_type', '=', 'App\Models\User')->delete();
-                }
-            }
+            DB::table('model_has_permissions')->where('model_type', '=', 'App\Models\User')->delete();
+            DB::table('model_has_roles')->where('model_type', '=', 'App\Models\User')->delete();
 
             foreach ($this->roles as $role) {
                 if (!empty($roleItem = DB::table('roles')->where('name', '=', $role['name'])->first())) {

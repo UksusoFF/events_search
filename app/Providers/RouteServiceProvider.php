@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Event;
+use App\Models\Event;
 use App\Tag;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Route;

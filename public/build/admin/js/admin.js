@@ -89925,6 +89925,57 @@ if (token) {
 
 /***/ }),
 
+/***/ "./resources/assets/admin/js/event/Form.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__app_components_Form_AppForm__ = __webpack_require__("./resources/assets/admin/js/app-components/Form/AppForm.js");
+
+
+Vue.component('event-form', {
+    mixins: [__WEBPACK_IMPORTED_MODULE_0__app_components_Form_AppForm__["a" /* default */]],
+    data: function data() {
+        return {
+            form: {
+                vid: '',
+                name: '',
+                description: '',
+                photo_200: '',
+                start_date: '',
+                ignored: false
+
+            }
+        };
+    }
+
+});
+
+/***/ }),
+
+/***/ "./resources/assets/admin/js/event/Listing.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__app_components_Listing_AppListing__ = __webpack_require__("./resources/assets/admin/js/app-components/Listing/AppListing.js");
+
+
+Vue.component('event-listing', {
+    mixins: [__WEBPACK_IMPORTED_MODULE_0__app_components_Listing_AppListing__["a" /* default */]]
+});
+
+/***/ }),
+
+/***/ "./resources/assets/admin/js/event/index.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Listing__ = __webpack_require__("./resources/assets/admin/js/event/Listing.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Form__ = __webpack_require__("./resources/assets/admin/js/event/Form.js");
+
+
+
+/***/ }),
+
 /***/ "./resources/assets/admin/js/index.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -89933,6 +89984,8 @@ if (token) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__profile_edit_profile__ = __webpack_require__("./resources/assets/admin/js/profile-edit-profile/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__profile_edit_password__ = __webpack_require__("./resources/assets/admin/js/profile-edit-password/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__source__ = __webpack_require__("./resources/assets/admin/js/source/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__event__ = __webpack_require__("./resources/assets/admin/js/event/index.js");
+
 
 
 

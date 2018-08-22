@@ -16,11 +16,10 @@ $factory->define(App\Models\User::class, function (Faker\Generator $faker) {
         'forbidden' => $faker->boolean(),
         'deleted_at' => null,
         'language' => 'en',
-                
     ];
 });
 
-/** @var  \Illuminate\Database\Eloquent\Factory $factory */
+/* @var  \Illuminate\Database\Eloquent\Factory $factory */
 $factory->define(App\Models\Source::class, function (Faker\Generator $faker) {
     return [
         'type' => $faker->sentence,
@@ -33,8 +32,20 @@ $factory->define(App\Models\Source::class, function (Faker\Generator $faker) {
         'map_date' => $faker->sentence,
         'updated_at' => $faker->dateTime,
         'created_at' => $faker->dateTime,
-        
-        
+    ];
+});
+
+/* @var  \Illuminate\Database\Eloquent\Factory $factory */
+$factory->define(App\Models\Event::class, function (Faker\Generator $faker) {
+    return [
+        'vid' => $faker->sentence,
+        'name' => $faker->firstName,
+        'description' => $faker->text(),
+        'photo_200' => $faker->text(),
+        'start_date' => $faker->dateTime,
+        'ignored' => $faker->boolean(),
+        'updated_at' => $faker->dateTime,
+        'created_at' => $faker->dateTime,
     ];
 });
 

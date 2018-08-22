@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Components\EventComponent;
-use App\Event;
-use App\EventCheckMark;
+use App\Models\Event;
+use App\Models\EventCheckMark;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;

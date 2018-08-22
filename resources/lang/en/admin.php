@@ -52,5 +52,25 @@ return [
         ],
     ],
 
+    'event' => [
+        'title' => 'Events',
+
+        'actions' => [
+            'index' => 'Events',
+            'create' => 'New Event',
+            'edit' => 'Edit :name',
+        ],
+
+        'columns' => [
+            'id' => 'ID',
+            'vid' => 'Vid',
+            'name' => 'Name',
+            'description' => 'Description',
+            'photo_200' => 'Photo 200',
+            'start_date' => 'Start date',
+            'ignored' => 'Ignored',
+        ],
+    ],
+
     // Do not delete me :) I'm used for auto-generation
 ];

@@ -2,8 +2,8 @@
 
 namespace App\Components;
 
-use App\Event;
-use App\User;
+use App\Models\Event;
+use App\Models\User;
 use Carbon\Carbon;
 
 class EventComponent
