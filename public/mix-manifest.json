@@ -1,6 +1,8 @@
 {
-    "/scripts/app.js": "/scripts/app.js?id=1db0016248607d61bbc6",
-    "/styles/app.css": "/styles/app.css?id=0e414b552f436f2ad2c1",
+    "/build/admin/js/admin.js": "/build/admin/js/admin.js?id=f87514b5de0224b7a47f",
+    "/scripts/app.js": "/scripts/app.js?id=ec4e9b82e517af9e144f",
+    "/styles/app.css": "/styles/app.css?id=8292d541cb65c97d76d4",
+    "/build/admin/css/app.css": "/build/admin/css/app.css?id=a274e97bcf63c1c70ff3",
     "/fonts/fontawesome-webfont.eot": "/fonts/fontawesome-webfont.eot?id=1fb8a705b37156056275",
     "/fonts/fontawesome-webfont.svg": "/fonts/fontawesome-webfont.svg?id=912ec66d7572ff821749",
     "/fonts/fontawesome-webfont.ttf": "/fonts/fontawesome-webfont.ttf?id=e1dd9adb4f69bb9a0bdc",

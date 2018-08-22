@@ -4,14 +4,9 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateRevisionsTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
-        Schema::create('revisions', function ($table) {
+        Schema::create('revisions', function($table) {
             $table->increments('id');
             $table->string('revisionable_type');
             $table->integer('revisionable_id');
@@ -21,15 +16,10 @@ class CreateRevisionsTable extends Migration
             $table->text('new_value')->nullable();
             $table->timestamps();
 
-            $table->index(array('revisionable_id', 'revisionable_type'));
+            $table->index(['revisionable_id', 'revisionable_type']);
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::drop('revisions');

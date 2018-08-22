@@ -16,5 +16,8 @@
         "jquery": "^3.3.1",
         "laravel-mix": "^2.1.11",
         "popper.js": "^1.14.3"
+    },
+    "devDependencies": {
+        "craftable": "^1.0.0"
     }
 }
