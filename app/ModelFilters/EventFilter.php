@@ -49,7 +49,8 @@ class EventFilter extends ModelFilter
         });
     }
 
-    public function sources($ids) {
+    public function sources($ids)
+    {
         return $this->where(function (Builder $query) use ($ids) {
             foreach ($ids as $id) {
                 $query->orWhere('uuid', 'LIKE', "%\_{$id}\_%");

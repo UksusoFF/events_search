@@ -39,7 +39,7 @@ class HtmlSource implements SourceInterface
                 'uuid' => $this->config->map_id ? implode('_', [
                     self::ID_PREFIX,
                     $this->config->id,
-                    md5($this->getNodeValue($node, $this->config->map_id))
+                    md5($this->getNodeValue($node, $this->config->map_id)),
                 ]) : null,
                 'title' => $this->config->map_title ? $this->getNodeValue($node, $this->config->map_title) : null,
                 'description' => $this->config->map_description ? $this->getNodeValue($node, $this->config->map_description) : null,
@@ -97,7 +97,7 @@ class HtmlSource implements SourceInterface
         if ($node->count()) {
             if ($node->nodeName() == 'img') {
                 return $node->image()->getUri();
-            } else if ($node->nodeName() == 'a') {
+            } elseif ($node->nodeName() == 'a') {
                 return $node->link()->getUri();
             } else {
                 return implode(PHP_EOL, $node->each(function (Crawler $item) {
@@ -129,9 +129,7 @@ class HtmlSource implements SourceInterface
                 ];
                 return Carbon::create("20$matches[3]", $months[$matches[2]], $matches[1], 20, 00);
             }
-
         }
         return null;
     }
-
 }

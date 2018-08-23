@@ -12,13 +12,13 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $user_id
  * @property string $title
  * @property string $source
- * @property string $map_items
- * @property string $map_id
- * @property string $map_title
- * @property string $map_description
- * @property string $map_image
- * @property string $map_date
- * @property string $map_date_format
+ * @property string|null $map_items
+ * @property string|null $map_id
+ * @property string|null $map_title
+ * @property string|null $map_description
+ * @property string|null $map_image
+ * @property string|null $map_date
+ * @property string|null $map_date_format
  * @property \Carbon\Carbon $updated_at
  * @property \Carbon\Carbon $created_at
  * @property-read \App\Models\User $user
