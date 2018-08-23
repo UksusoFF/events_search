@@ -12,6 +12,7 @@ class EventComponent
 {
     /**
      * @throws \Exception
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function refresh()
     {
@@ -35,7 +36,7 @@ class EventComponent
         }
 
         $events->filter(function ($event) {
-            return array_has($event, [
+            return array_has(array_filter($event), [
                 'uuid',
                 'title',
                 'date',

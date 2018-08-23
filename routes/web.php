@@ -23,4 +23,10 @@ Route::prefix('tags')->group(function () {
     Route::post('{tag}/update', 'TagController@update');
 });
 
+Route::prefix('sources')->group(function () {
+    Route::get('/', 'SourceController@index');
+    Route::post('store', 'SourceController@store');
+    Route::post('{source}/update', 'SourceController@update');
+});
+
 Auth::routes();

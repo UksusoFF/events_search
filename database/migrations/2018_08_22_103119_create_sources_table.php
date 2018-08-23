@@ -14,13 +14,13 @@ class CreateSourcesTable extends Migration
             $table->unsignedInteger('user_id');
             $table->string('title');
             $table->string('source');
-            $table->string('map_items');
-            $table->string('map_id');
-            $table->string('map_title');
-            $table->string('map_description');
-            $table->string('map_image');
-            $table->string('map_date');
-            $table->string('map_date_format');
+            $table->string('map_items')->nullable();
+            $table->string('map_id')->nullable();
+            $table->string('map_title')->nullable();
+            $table->string('map_description')->nullable();
+            $table->string('map_image')->nullable();
+            $table->string('map_date')->nullable();
+            $table->string('map_date_format')->nullable();
             $table->timestamp('updated_at')->useCurrent();
             $table->timestamp('created_at')->useCurrent();
 

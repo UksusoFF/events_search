@@ -1,8 +1,8 @@
-<a href="#tag-{{ $model['id'] or 'new' }}"
+<a href="#source-{{ $model['id'] or 'new' }}"
    class="{{ $type or 'badge' }} {{ $type or 'badge' }}-success"
    data-toggle="modal"><i class="fa fa-{{ $icon }}"></i>
 </a>
-<div id="tag-{{ $model['id'] or 'new' }}" class="modal fade">
+<div id="source-{{ $model['id'] or 'new' }}" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -12,13 +12,22 @@
                 {{ csrf_field() }}
                 <div class="modal-body">
                     @foreach([
-                        'name',
+                        'type',
+                        'title',
+                        'source',
+                        'map_items',
+                        'map_id',
+                        'map_title',
+                        'map_description',
+                        'map_image',
+                        'map_date',
+                        'map_date_format',
                     ] as $field)
                         <div class="form-group">
-                            <label for="tag-{{ $model['id'] or 'new' }}-{{ $field }}">{{ $field }}</label>
+                            <label for="source-{{ $model['id'] or 'new' }}-{{ $field }}">{{ $field }}</label>
                             <input type="text"
                                    class="form-control"
-                                   id="tag-{{ $model['id'] or 'new' }}-{{ $field }}"
+                                   id="source-{{ $model['id'] or 'new' }}-{{ $field }}"
                                    name="{{ $field }}"
                                    value="{{ $model[$field] or '' }}">
                         </div>

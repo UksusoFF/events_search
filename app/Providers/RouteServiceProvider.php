@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Event;
+use App\Models\Source;
 use App\Tag;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Route;
@@ -16,6 +17,7 @@ class RouteServiceProvider extends ServiceProvider
         parent::boot();
 
         Route::model('event', Event::class);
+        Route::model('source', Source::class);
         Route::model('tag', Tag::class);
     }
 

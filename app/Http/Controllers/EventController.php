@@ -15,16 +15,25 @@ class EventController extends Controller
         $events = Event::where('date', '>=', Carbon::now());
 
         $tags = auth()->user()->tags->map(function ($tag) use ($events) {
-            return [
-                'id' => $tag->id,
-                'name' => $tag->name,
-                'title' => head(explode('|', $tag->name)),
-                'count' => with(clone $events)
-                    ->filter([
-                        'search' => explode('|', $tag->name),
-                    ])
-                    ->count(),
-            ];
+            $tag->count = with(clone $events)
+                ->filter([
+                    'tags' => [
+                        $tag->id,
+                    ],
+                ])
+                ->count();
+            return $tag;
+        })->sortByDesc('count');
+
+        $sources = auth()->user()->sources->map(function ($source) use ($events) {
+            $source->count = with(clone $events)
+                ->filter([
+                    'sources' => [
+                        $source->id,
+                    ],
+                ])
+                ->count();
+            return $source;
         })->sortByDesc('count');
 
         return view('events.index', [
@@ -33,6 +42,7 @@ class EventController extends Controller
                 ->sortable(['date'])
                 ->paginate(),
             'tags' => $tags,
+            'sources' => $sources,
         ]);
     }
 

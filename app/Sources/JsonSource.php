@@ -20,6 +20,9 @@ class JsonSource implements SourceInterface
         $this->client = new Client();
     }
 
+    /**
+     * @return \Illuminate\Support\Collection
+     */
     public function getEvents()
     {
         $array = json_decode($this->client->get($this->config->source)->getBody(), true);

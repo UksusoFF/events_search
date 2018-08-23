@@ -43,6 +43,7 @@ class Source extends Model
     protected $fillable = [
         'type',
         'user_id',
+        'title',
         'source',
         'map_items',
         'map_id',
