@@ -17,7 +17,7 @@ class CreateSourcesTable extends Migration
             $table->string('map_items');
             $table->string('map_id');
             $table->string('map_title');
-            $table->string('map_desc');
+            $table->string('map_description');
             $table->string('map_image');
             $table->string('map_date');
             $table->string('map_date_format');

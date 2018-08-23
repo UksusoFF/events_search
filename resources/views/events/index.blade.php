@@ -20,11 +20,6 @@
                 'value' => 'today',
                 'title' => 'Updated at today',
             ]])
-            @include('partials.link_filter', ['params' => [
-                'key' => 'state',
-                'value' => 'unread',
-                'title' => 'Unread',
-            ]])
             <hr>
             @foreach($tags as $tag)
                 <div>
@@ -34,7 +29,7 @@
                         'title' => "{$tag['title']} ({$tag['count']})",
                     ]])
 
-                    @include('events.tag_create_edit', [
+                    @include('tags.create_edit', [
                         'action' => action('TagController@update', [
                             'tag' => $tag['id'],
                         ]),
@@ -45,7 +40,7 @@
                 </div>
             @endforeach
 
-            @include('events.tag_create_edit', [
+            @include('tags.create_edit', [
                 'action' => action('TagController@store'),
                 'id' => 'create',
                 'tagName' => '',
@@ -67,8 +62,7 @@
                             <th>Name / Image</th>
                             <th class="text-right text-nowrap">@sortablelink('created_at')</th>
                             <th class="text-right text-nowrap">@sortablelink('updated_at')</th>
-                            <th class="text-right text-nowrap">@sortablelink('start_date')</th>
-                            <th class="text-right">Actions</th>
+                            <th class="text-right text-nowrap">@sortablelink('date')</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -76,23 +70,16 @@
                             <tr>
                                 <td>
                                     <a href="{{ action('EventController@show', $event) }}">
-                                        {{ $event->name }}
+                                        {{ $event->title }}
                                     </a>
                                     <hr>
-                                    <a href="https://vk.com/event{{ $event->vid }}">
-                                        <img src="{{ $event->photo_200 }}">
+                                    <a href="https://vk.com/event{{ $event->uuid }}">
+                                        <img src="{{ $event->image }}">
                                     </a>
                                 </td>
                                 <td class="text-right">{{ $event->created_at->format('Y-m-d H:i:s') }}</td>
                                 <td class="text-right">{{ $event->updated_at->format('Y-m-d H:i:s') }}</td>
-                                <td class="text-right">{{ $event->start_date->format('Y-m-d H:i:s') }}</td>
-                                <td class="text-right">
-                                    <a href="{{ action('EventController@read', $event) }}"
-                                       class="btn btn-success btn-sm"
-                                       title="Mark as read">
-                                        <i class="fa fa-check" aria-hidden="true"></i>
-                                    </a>
-                                </td>
+                                <td class="text-right">{{ $event->date->format('Y-m-d H:i:s') }}</td>
                             </tr>
                         @endforeach
                         </tbody>

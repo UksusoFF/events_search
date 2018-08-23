@@ -15,12 +15,14 @@ class EventComponent
      */
     public function refresh()
     {
-        Event::where('start_date', '<', Carbon::yesterday())->delete();
+        Event::where('date', '<', Carbon::yesterday())->delete();
+
+        $events = collect();
 
         foreach (User::all() as $user) {
             foreach ($user->sources as $source) {
-                /** @var \App\Sources\SourceInterface $src */
-                switch ($source) {
+                /* @var \App\Sources\SourceInterface $src */
+                switch ($source->type) {
                     case 'json':
                         $src = new JsonSource($source);
                         break;
@@ -28,44 +30,27 @@ class EventComponent
                         $src = new HtmlSource($source);
                         break;
                 }
-                $src->getEvents();
-
+                $events = $events->merge($src->getEvents());
             }
         }
 
-        //TODO: Fix null.
-        User::pluck('city_id')->unique()->each(function ($cityId) {
-            $vkEvents = collect($this->vkontakteComponent->searchEvents($cityId));
-
-            $vkEvents = $vkEvents->filter(function ($vkEvent) {
-                return !$vkEvent['is_closed'] && array_has($vkEvent, [
-                    'id',
-                    'name',
-                    'description',
-                    'photo_200',
-                    'start_date',
-                ]);
-            });
-
-            foreach ($vkEvents as $vkEvent) {
-                $event = Event::where('vid', $vkEvent['id'])->first();
-                if (!$event) {
-                    $event = new Event([
-                        'vid' => $vkEvent['id'],
-                        'ignored' => false,
-                    ]);
-                }
-                $event->fill([
-                    'name' => $vkEvent['name'],
-                    'description' => $vkEvent['description'],
-                    'photo_200' => $vkEvent['photo_200'],
-                    'start_date' => $vkEvent['start_date'],
-                ]);
-                if ($event->isDirty()) {
-                    $event->checkMarks()->delete();
-                }
-                $event->save();
-            }
+        $events->filter(function ($event) {
+            return array_has($event, [
+                'uuid',
+                'title',
+                'date',
+            ]);
+        })->each(function ($event) {
+            $e = Event::where('uuid', $event['uuid'])->firstOrNew([
+                'uuid' => $event['uuid'],
+            ]);
+            $e->fill([
+                'title' => $event['title'],
+                'description' => $event['description'],
+                'image' => $event['image'],
+                'date' => $event['date'],
+            ]);
+            $e->save();
         });
     }
 }

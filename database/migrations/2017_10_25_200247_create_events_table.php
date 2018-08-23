@@ -10,12 +10,11 @@ class CreateEventsTable extends Migration
     {
         Schema::create('events', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('vid');
-            $table->string('name');
-            $table->longText('description');
-            $table->longText('photo_200');
-            $table->timestamp('start_date')->nullable();
-            $table->boolean('ignored');
+            $table->string('uuid');
+            $table->string('title')->nullable();
+            $table->longText('description')->nullable();
+            $table->longText('image')->nullable();
+            $table->timestamp('date')->nullable();
             $table->timestamp('updated_at')->useCurrent();
             $table->timestamp('created_at')->useCurrent();
         });

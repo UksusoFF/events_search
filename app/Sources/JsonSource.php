@@ -12,6 +12,8 @@ class JsonSource implements SourceInterface
 
     private $client;
 
+    private const ID_PREFIX = 'json';
+
     public function __construct(Source $source)
     {
         $this->config = $source;
@@ -24,16 +26,24 @@ class JsonSource implements SourceInterface
 
         $items = array_get($array, $this->config->map_items, []);
 
+        //$test = collect($items)->filter(function ($item) {return empty($item['start_date']); });
+
         return collect(array_map(function ($item) {
             $date = array_get($item, $this->config->map_date);
             return [
-                'id' => array_get($item, $this->config->map_id),
+                'uuid' => implode('_', [
+                    self::ID_PREFIX,
+                    $this->config->id,
+                    array_get($item, $this->config->map_id),
+                ]),
                 'title' => array_get($item, $this->config->map_title),
-                'desc' => array_get($item, $this->config->map_desc),
+                'description' => array_get($item, $this->config->map_description),
                 'image' => array_get($item, $this->config->map_image),
-                'date' => $this->config->map_date_format === 'timestamp' ?
-                    Carbon::createFromTimestamp($date) :
-                    Carbon::createFromFormat($date, $this->config->map_date_format),
+                'date' => $date ? (
+                    $this->config->map_date_format === 'timestamp' ?
+                        Carbon::createFromTimestamp($date) :
+                        Carbon::createFromFormat($date, $this->config->map_date_format)
+                ) : null,
             ];
         }, $items));
     }

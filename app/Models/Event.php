@@ -11,15 +11,13 @@ use Venturecraft\Revisionable\RevisionableTrait as Revisionable;
  * App\Models\Event
  *
  * @property int $id
- * @property string $vid
- * @property string $name
- * @property string $description
- * @property string $photo_200
- * @property \Carbon\Carbon|null $start_date
- * @property int $ignored
+ * @property string $uuid
+ * @property string|null $title
+ * @property string|null $description
+ * @property string|null $image
+ * @property \Carbon\Carbon|null $date
  * @property \Carbon\Carbon $updated_at
  * @property \Carbon\Carbon $created_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\EventCheckMark[] $checkMarks
  * @property-read mixed $resource_url
  * @property-read \Illuminate\Database\Eloquent\Collection|\Venturecraft\Revisionable\Revision[] $revisionHistory
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event filter($input = array(), $filter = null)
@@ -28,16 +26,15 @@ use Venturecraft\Revisionable\RevisionableTrait as Revisionable;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event sortable($defaultSortParameters = null)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereBeginsWith($column, $value, $boolean = 'and')
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereDate($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereEndsWith($column, $value, $boolean = 'and')
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereIgnored($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereImage($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereLike($column, $value, $boolean = 'and')
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event wherePhoto200($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereStartDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereVid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereUuid($value)
  * @mixin \Eloquent
  */
 class Event extends Model
@@ -47,31 +44,27 @@ class Event extends Model
     use Sortable;
 
     public $sortable = [
-        'created_at',
+        'date',
         'updated_at',
-        'start_date',
+        'created_at',
     ];
 
     use Revisionable;
 
-    protected $dontKeepRevisionOf = [
-        'ignored',
-    ];
-
     protected $fillable = [
-        'vid',
-        'name',
+        'uuid',
+        'title',
         'description',
-        'photo_200',
-        'start_date',
-        'ignored',
+        'image',
+        'date',
     ];
 
     protected $hidden = [
+        //
     ];
 
     protected $dates = [
-        'start_date',
+        'date',
         'updated_at',
         'created_at',
     ];
@@ -85,10 +78,5 @@ class Event extends Model
     public function getResourceUrlAttribute()
     {
         return url('/admin/events/' . $this->getKey());
-    }
-
-    public function checkMarks()
-    {
-        return $this->hasMany(EventCheckMark::class);
     }
 }

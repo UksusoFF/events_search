@@ -28,24 +28,10 @@ $factory->define(App\Models\Source::class, function (Faker\Generator $faker) {
         'map_items' => $faker->sentence,
         'map_id' => $faker->sentence,
         'map_title' => $faker->sentence,
-        'map_desc' => $faker->sentence,
+        'map_description' => $faker->sentence,
         'map_image' => $faker->sentence,
         'map_date' => $faker->sentence,
         'map_date_format' => $faker->sentence,
-        'updated_at' => $faker->dateTime,
-        'created_at' => $faker->dateTime,
-    ];
-});
-
-/* @var  \Illuminate\Database\Eloquent\Factory $factory */
-$factory->define(App\Models\Event::class, function (Faker\Generator $faker) {
-    return [
-        'vid' => $faker->sentence,
-        'name' => $faker->firstName,
-        'description' => $faker->text(),
-        'photo_200' => $faker->text(),
-        'start_date' => $faker->dateTime,
-        'ignored' => $faker->boolean(),
         'updated_at' => $faker->dateTime,
         'created_at' => $faker->dateTime,
     ];

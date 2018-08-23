@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $map_items
  * @property string $map_id
  * @property string $map_title
- * @property string $map_desc
+ * @property string $map_description
  * @property string $map_image
  * @property string $map_date
  * @property string $map_date_format
@@ -26,9 +26,11 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Source whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Source whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Source whereMapDate($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Source whereMapDesc($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Source whereMapDateFormat($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Source whereMapDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Source whereMapId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Source whereMapImage($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Source whereMapItems($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Source whereMapTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Source whereSource($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Source whereTitle($value)
@@ -46,7 +48,7 @@ class Source extends Model
         'map_items',
         'map_id',
         'map_title',
-        'map_desc',
+        'map_description',
         'map_image',
         'map_date',
         'map_date_format',

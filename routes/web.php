@@ -16,16 +16,11 @@ Route::get('/', 'EventController@index')->name('home');
 Route::prefix('events')->group(function () {
     Route::get('check', 'EventController@check');
     Route::get('{event}/show', 'EventController@show');
-    Route::get('{event}/read', 'EventController@read');
 });
 
 Route::prefix('tags')->group(function () {
     Route::post('store', 'TagController@store');
     Route::post('{tag}/update', 'TagController@update');
-});
-
-Route::prefix('auth')->group(function () {
-    Route::post('update', 'AuthController@update');
 });
 
 Auth::routes();
@@ -57,14 +52,4 @@ Route::middleware(['admin'])->group(function () {
     Route::get('/admin/sources/{source}/edit', 'Admin\SourcesController@edit')->name('admin/sources/edit');
     Route::post('/admin/sources/{source}', 'Admin\SourcesController@update')->name('admin/sources/update');
     Route::delete('/admin/sources/{source}', 'Admin\SourcesController@destroy')->name('admin/sources/destroy');
-});
-
-/* Auto-generated admin routes */
-Route::middleware(['admin'])->group(function () {
-    Route::get('/admin/events', 'Admin\EventsController@index');
-    Route::get('/admin/events/create', 'Admin\EventsController@create');
-    Route::post('/admin/events', 'Admin\EventsController@store');
-    Route::get('/admin/events/{event}/edit', 'Admin\EventsController@edit')->name('admin/events/edit');
-    Route::post('/admin/events/{event}', 'Admin\EventsController@update')->name('admin/events/update');
-    Route::delete('/admin/events/{event}', 'Admin\EventsController@destroy')->name('admin/events/destroy');
 });

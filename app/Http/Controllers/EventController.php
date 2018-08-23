@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Components\EventComponent;
 use App\Models\Event;
-use App\Models\EventCheckMark;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
@@ -13,7 +12,7 @@ class EventController extends Controller
 {
     public function index(Request $request)
     {
-        $events = Event::where('start_date', '>=', Carbon::now());
+        $events = Event::where('date', '>=', Carbon::now());
 
         $tags = auth()->user()->tags->map(function ($tag) use ($events) {
             return [
@@ -21,7 +20,9 @@ class EventController extends Controller
                 'name' => $tag->name,
                 'title' => head(explode('|', $tag->name)),
                 'count' => with(clone $events)
-                    ->filter(['search' => explode('|', $tag->name)])
+                    ->filter([
+                        'search' => explode('|', $tag->name)
+                    ])
                     ->count(),
             ];
         })->sortByDesc('count');
@@ -29,7 +30,7 @@ class EventController extends Controller
         return view('events.index', [
             'events' => $events
                 ->filter($request->input('f', []))
-                ->sortable(['start_date'])
+                ->sortable(['date'])
                 ->paginate(),
             'tags' => $tags,
         ]);
@@ -40,17 +41,6 @@ class EventController extends Controller
         return view('events.show', [
             'event' => $event,
         ]);
-    }
-
-    public function read(Request $request, Event $event)
-    {
-        $eventCheckMark = new EventCheckMark([
-            'event_id' => $event->id,
-            'user_id' => auth()->id(),
-        ]);
-        $eventCheckMark->save();
-
-        return redirect()->back();
     }
 
     public function check(Request $request, EventComponent $eventComponent)

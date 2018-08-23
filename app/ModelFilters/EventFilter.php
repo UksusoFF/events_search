@@ -4,6 +4,7 @@ namespace App\ModelFilters;
 
 use Carbon\Carbon;
 use EloquentFilter\ModelFilter;
+use Illuminate\Database\Query\Builder;
 
 class EventFilter extends ModelFilter
 {
@@ -29,26 +30,13 @@ class EventFilter extends ModelFilter
         }
     }
 
-    public function state($state)
-    {
-        switch (head($state)) {
-            case 'unread':
-                return $this->whereDoesntHave('checkMarks', function ($query) {
-                    return $query->where('user_id', auth()->id());
-                });
-                break;
-            default:
-                return $this;
-        }
-    }
-
     public function search($search)
     {
         $searchParts = explode('|', implode('|', $search));
-        return $this->where(function ($query) use ($searchParts) {
+        return $this->where(function (Builder $query) use ($searchParts) {
             foreach ($searchParts as $searchPart) {
                 $query->orWhere('description', 'LIKE', '%' . $searchPart . '%')
-                    ->orWhere('name', 'LIKE', '%' . $searchPart . '%');
+                    ->orWhere('title', 'LIKE', '%' . $searchPart . '%');
             }
             return $query;
         });
