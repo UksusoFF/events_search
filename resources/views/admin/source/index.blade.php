@@ -30,7 +30,7 @@
 
                                 <div class="col-sm-auto form-group ">
                                     <select class="form-control" v-model="pagination.state.per_page">
-                                        
+
                                         <option value="10">10</option>
                                         <option value="25">25</option>
                                         <option value="100">100</option>
@@ -45,14 +45,8 @@
                                 <tr>
                                     <th is='sortable' :column="'id'">{{ trans('admin.source.columns.id') }}</th>
                                     <th is='sortable' :column="'type'">{{ trans('admin.source.columns.type') }}</th>
-                                    <th is='sortable' :column="'user_id'">{{ trans('admin.source.columns.user_id') }}</th>
-                                    <th is='sortable' :column="'source'">{{ trans('admin.source.columns.source') }}</th>
-                                    <th is='sortable' :column="'map_id'">{{ trans('admin.source.columns.map_id') }}</th>
-                                    <th is='sortable' :column="'map_title'">{{ trans('admin.source.columns.map_title') }}</th>
-                                    <th is='sortable' :column="'map_desc'">{{ trans('admin.source.columns.map_desc') }}</th>
-                                    <th is='sortable' :column="'map_image'">{{ trans('admin.source.columns.map_image') }}</th>
-                                    <th is='sortable' :column="'map_date'">{{ trans('admin.source.columns.map_date') }}</th>
-                                    
+                                    <th is='sortable' :column="'title'">{{ trans('admin.source.columns.title') }}</th>
+
                                     <th></th>
                                 </tr>
                             </thead>
@@ -60,14 +54,8 @@
                                 <tr v-for="(item, index) in collection">
                                     <td>@{{ item.id }}</td>
                                     <td>@{{ item.type }}</td>
-                                    <td>@{{ item.user_id }}</td>
-                                    <td>@{{ item.source }}</td>
-                                    <td>@{{ item.map_id }}</td>
-                                    <td>@{{ item.map_title }}</td>
-                                    <td>@{{ item.map_desc }}</td>
-                                    <td>@{{ item.map_image }}</td>
-                                    <td>@{{ item.map_date }}</td>
-                                    
+                                    <td>@{{ item.title }}</td>
+
                                     <td>
                                         <div class="row no-gutters">
                                             <div class="col-auto">

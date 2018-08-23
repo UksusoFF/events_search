@@ -12,7 +12,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Events Search System'),
+    'name' => env('APP_NAME', 'Events Search'),
 
     /*
     |--------------------------------------------------------------------------

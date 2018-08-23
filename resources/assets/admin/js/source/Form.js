@@ -8,12 +8,14 @@ Vue.component('source-form', {
                 type:  '' ,
                 user_id:  '' ,
                 source:  '' ,
+                map_items:  '' ,
                 map_id:  '' ,
                 map_title:  '' ,
                 map_desc:  '' ,
                 map_image:  '' ,
                 map_date:  '' ,
-                
+                map_date_format:  '' ,
+
             }
         }
     }

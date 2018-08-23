@@ -2,8 +2,8 @@
     <nav class="sidebar-nav">
         <ul class="nav">
             <li class="nav-title">{{ trans('brackets/admin-ui::admin.sidebar.content') }}</li>
-            <li class="nav-item"><a class="nav-link" href="{{ url('admin/sources') }}"><i class="icon-energy"></i> <span class="nav-link-text">{{ trans('admin.source.title') }}</span></a></li>
-           <li class="nav-item"><a class="nav-link" href="{{ url('admin/events') }}"><i class="icon-ghost"></i> <span class="nav-link-text">{{ trans('admin.event.title') }}</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ url('admin/sources') }}"><i class="icon-puzzle"></i> <span class="nav-link-text">{{ trans('admin.source.title') }}</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ url('admin/events') }}"><i class="icon-calendar"></i> <span class="nav-link-text">{{ trans('admin.event.title') }}</span></a></li>
            {{-- Do not delete me :) I'm used for auto-generation menu items --}}
 
             {{--<li class="nav-title">E-shop</li>--}}

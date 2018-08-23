@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use \Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\User\DestroyUser;
 use App\Http\Requests\Admin\User\IndexUser;
@@ -13,82 +12,89 @@ use Brackets\AdminAuth\Facades\Activation;
 use Brackets\AdminAuth\Services\ActivationService;
 use Brackets\AdminListing\Facades\AdminListing;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Config;
 use Spatie\Permission\Models\Role;
 
 class UsersController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * @param \App\Http\Requests\Admin\User\IndexUser $request
      *
-     * @param  IndexUser $request
-     * @return Response|array
+     * @return array|\Illuminate\Contracts\View\Factory|\Illuminate\View\View|mixed
      */
     public function index(IndexUser $request)
     {
         // create and AdminListing instance for a specific model and
         $data = AdminListing::create(User::class)->processRequestAndGet(
-            // pass the request with params
             $request,
-
-            // set columns to query
-            ['id', 'email', 'first_name', 'last_name', 'activated', 'forbidden', 'language'],
-
-            // set columns to searchIn
-            ['id', 'email', 'city_id', 'token', 'first_name', 'last_name', 'language']
+            [
+                'id',
+                'email',
+                'first_name',
+                'last_name',
+                'activated',
+                'forbidden',
+                'language',
+            ],
+            [
+                'id',
+                'email',
+                'first_name',
+                'last_name',
+            ]
         );
 
         if ($request->ajax()) {
-            return ['data' => $data, 'activation' => Config::get('admin-auth.activations.enabled')];
+            return [
+                'data' => $data,
+                'activation' => config('admin-auth.activations.enabled'),
+            ];
         }
 
-        return view('admin.user.index', ['data' => $data, 'activation' => Config::get('admin-auth.activations.enabled')]);
+        return view('admin.user.index', [
+            'data' => $data,
+            'activation' => config('admin-auth.activations.enabled'),
+        ]);
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
+     * @return array|\Illuminate\Contracts\View\Factory|\Illuminate\View\View|mixed
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function create()
     {
         $this->authorize('admin.user.create');
 
         return view('admin.user.create', [
-            'activation' => Config::get('admin-auth.activations.enabled'),
+            'activation' => config('admin-auth.activations.enabled'),
             'roles' => Role::all(),
         ]);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * @param \App\Http\Requests\Admin\User\StoreUser $request
      *
-     * @param  StoreUser $request
-     * @return Response|array
+     * @return array|\Illuminate\Http\RedirectResponse
      */
     public function store(StoreUser $request)
     {
-        // Sanitize input
-        $sanitized = $request->getModifiedData();
+        $user = User::create($request->getModifiedData());
 
-        // Store the User
-        $user = User::create($sanitized);
-
-        // But we do have a roles, so we need to attach the roles to the user
         $user->roles()->sync(collect($request->input('roles', []))->map->id->toArray());
 
         if ($request->ajax()) {
-            return ['redirect' => url('admin/users'), 'message' => trans('brackets/admin-ui::admin.operation.succeeded')];
+            return [
+                'redirect' => action('Admin\UsersController@index'),
+                'message' => trans('brackets/admin-ui::admin.operation.succeeded'),
+            ];
         }
 
-        return redirect('admin/users');
+        return redirect()->action('Admin\UsersController@index');
     }
 
     /**
-     * Display the specified resource.
+     * @param \App\Models\User $user
      *
-     * @param  User $user
-     * @return Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function show(User $user)
     {
@@ -98,10 +104,10 @@ class UsersController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * @param \App\Models\User $user
      *
-     * @param  User $user
-     * @return Response
+     * @return array|\Illuminate\Contracts\View\Factory|\Illuminate\View\View|mixed
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function edit(User $user)
     {
@@ -111,83 +117,88 @@ class UsersController extends Controller
 
         return view('admin.user.edit', [
             'user' => $user,
-            'activation' => Config::get('admin-auth.activations.enabled'),
+            'activation' => config('admin-auth.activations.enabled'),
             'roles' => Role::all(),
         ]);
     }
 
     /**
-     * Update the specified resource in storage.
+     * @param \App\Http\Requests\Admin\User\UpdateUser $request
+     * @param \App\Models\User $user
      *
-     * @param  UpdateUser $request
-     * @param  User $user
-     * @return Response|array
+     * @return array|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function update(UpdateUser $request, User $user)
     {
-        // Sanitize input
-        $sanitized = $request->getModifiedData();
+        $user->update($request->getModifiedData());
 
-        // Update changed values User
-        $user->update($sanitized);
-
-        // But we do have a roles, so we need to attach the roles to the user
         if ($request->input('roles')) {
             $user->roles()->sync(collect($request->input('roles', []))->map->id->toArray());
         }
 
         if ($request->ajax()) {
-            return ['redirect' => url('admin/users'), 'message' => trans('brackets/admin-ui::admin.operation.succeeded')];
+            return [
+                'redirect' => action('Admin\UsersController@index'),
+                'message' => trans('brackets/admin-ui::admin.operation.succeeded'),
+            ];
         }
 
-        return redirect('admin/users');
+        return redirect()->action('Admin\UsersController@index');
     }
 
     /**
-     * Remove the specified resource from storage.
+     * @param \App\Http\Requests\Admin\User\DestroyUser $request
+     * @param \App\Models\User $user
      *
-     * @param  DestroyUser $request
-     * @param  User $user
-     * @return Response|bool
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
+     * @throws \Exception
      */
     public function destroy(DestroyUser $request, User $user)
     {
         $user->delete();
 
         if ($request->ajax()) {
-            return response(['message' => trans('brackets/admin-ui::admin.operation.succeeded')]);
+            return response([
+                'message' => trans('brackets/admin-ui::admin.operation.succeeded'),
+            ]);
         }
 
         return redirect()->back();
     }
 
     /**
-     * Resend activation e-mail
+     * @param \Illuminate\Http\Request $request
+     * @param \Brackets\AdminAuth\Services\ActivationService $activationService
+     * @param \App\Models\User $user
      *
-     * @param    \Illuminate\Http\Request  $request
-     * @param    User $user
-     * @return  array|\Illuminate\Http\Response
+     * @return array|\Illuminate\Http\RedirectResponse
      */
     public function resendActivationEmail(Request $request, ActivationService $activationService, User $user)
     {
-        if (Config::get('admin-auth.activations.enabled')) {
+        if (config('admin-auth.activations.enabled')) {
             $response = $activationService->handle($user);
             if ($response == Activation::ACTIVATION_LINK_SENT) {
                 if ($request->ajax()) {
-                    return ['message' => trans('brackets/admin-ui::admin.operation.succeeded')];
+                    return [
+                        'message' => trans('brackets/admin-ui::admin.operation.succeeded'),
+                    ];
                 }
 
                 return redirect()->back();
             } else {
                 if ($request->ajax()) {
-                    return ['message' => trans('brackets/admin-ui::admin.operation.failed')];
+                    return [
+                        'message' => trans('brackets/admin-ui::admin.operation.failed'),
+                    ];
                 }
 
                 return redirect()->back();
             }
         } else {
             if ($request->ajax()) {
-                return ['message' => trans('brackets/admin-ui::admin.operation.not_allowed')];
+                return [
+                    'message' => trans('brackets/admin-ui::admin.operation.not_allowed'),
+                ];
             }
 
             return redirect()->back();

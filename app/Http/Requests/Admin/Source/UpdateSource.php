@@ -26,13 +26,15 @@ class UpdateSource extends FormRequest
     {
         return [
             'type' => ['sometimes', 'string'],
-            'user_id' => ['sometimes', 'integer'],
             'source' => ['sometimes', 'string'],
+            'title' => ['sometimes', 'string'],
+            'map_items' => ['sometimes', 'string'],
             'map_id' => ['sometimes', 'string'],
             'map_title' => ['sometimes', 'string'],
             'map_desc' => ['sometimes', 'string'],
             'map_image' => ['sometimes', 'string'],
             'map_date' => ['sometimes', 'string'],
+            'map_date_format' => ['sometimes', 'string'],
         ];
     }
 }

@@ -26,13 +26,15 @@ class StoreSource extends FormRequest
     {
         return [
             'type' => ['required', 'string'],
-            'user_id' => ['required', 'integer'],
             'source' => ['required', 'string'],
+            'title' => ['required', 'string'],
+            'map_items' => ['required', 'string'],
             'map_id' => ['required', 'string'],
             'map_title' => ['required', 'string'],
             'map_desc' => ['required', 'string'],
             'map_image' => ['required', 'string'],
             'map_date' => ['required', 'string'],
+            'map_date_format' => ['required', 'string'],
         ];
     }
 }

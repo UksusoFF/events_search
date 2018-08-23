@@ -4,17 +4,12 @@ namespace App\Components;
 
 use App\Models\Event;
 use App\Models\User;
+use App\Sources\HtmlSource;
+use App\Sources\JsonSource;
 use Carbon\Carbon;
 
 class EventComponent
 {
-    private $vkontakteComponent;
-
-    public function __construct(VkontakteComponent $vkontakteComponent)
-    {
-        $this->vkontakteComponent = $vkontakteComponent;
-    }
-
     /**
      * @throws \Exception
      */
@@ -22,6 +17,23 @@ class EventComponent
     {
         Event::where('start_date', '<', Carbon::yesterday())->delete();
 
+        foreach (User::all() as $user) {
+            foreach ($user->sources as $source) {
+                /** @var \App\Sources\SourceInterface $src */
+                switch ($source) {
+                    case 'json':
+                        $src = new JsonSource($source);
+                        break;
+                    case 'html':
+                        $src = new HtmlSource($source);
+                        break;
+                }
+                $src->getEvents();
+
+            }
+        }
+
+        //TODO: Fix null.
         User::pluck('city_id')->unique()->each(function ($cityId) {
             $vkEvents = collect($this->vkontakteComponent->searchEvents($cityId));
 

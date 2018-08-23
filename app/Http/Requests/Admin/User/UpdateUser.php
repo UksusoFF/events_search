@@ -40,7 +40,7 @@ class UpdateUser extends FormRequest
             'roles' => ['sometimes', 'array'],
         ];
 
-        if (Config::get('admin-auth.activations.enabled')) {
+        if (config('admin-auth.activations.enabled')) {
             $rules['activated'] = ['required', 'boolean'];
         }
 
@@ -56,7 +56,7 @@ class UpdateUser extends FormRequest
     {
         $data = $this->only(collect($this->rules())->keys()->all());
         //TODO: is this ok?
-        if (!Config::get('admin-auth.activations.enabled')) {
+        if (!config('admin-auth.activations.enabled')) {
             $data['activated'] = true;
         }
         if (array_key_exists('password', $data) && empty($data['password'])) {

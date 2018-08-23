@@ -40,7 +40,7 @@ class StoreUser extends FormRequest
             'roles' => ['array'],
         ];
 
-        if (Config::get('admin-auth.activations.enabled')) {
+        if (config('admin-auth.activations.enabled')) {
             $rules['activated'] = ['required', 'boolean'];
         }
 
@@ -55,8 +55,7 @@ class StoreUser extends FormRequest
     public function getModifiedData()
     {
         $data = $this->only(collect($this->rules())->keys()->all());
-        //TODO: is this ok?
-        if (!Config::get('admin-auth.activations.enabled')) {
+        if (!config('admin-auth.activations.enabled')) {
             $data['activated'] = true;
         }
         if (!empty($data['password'])) {

@@ -25,7 +25,7 @@ class IndexSource extends FormRequest
     public function rules()
     {
         return [
-            'orderBy' => 'in:id,type,user_id,source,map_id,map_title,map_desc,map_image,map_date|nullable',
+            'orderBy' => 'in:id,type,source,title|nullable',
             'orderDirection' => 'in:asc,desc|nullable',
             'search' => 'string|nullable',
             'page' => 'integer|nullable',

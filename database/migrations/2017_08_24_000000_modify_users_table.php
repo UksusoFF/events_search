@@ -47,9 +47,7 @@ class ModifyUsersTable extends Migration
                 $table->unique(['email', 'deleted_at']);
             });
 
-            $connection = config('database.default');
-            $driver = config("database.connections.{$connection}.driver");
-            if ($driver == 'pgsql') {
+            if ($this->isPgsql()) {
                 Schema::table('users', function (Blueprint $table) {
                     DB::statement('CREATE UNIQUE INDEX users_email_null_deleted_at ON users (email) WHERE deleted_at IS NULL;');
                 });
@@ -61,6 +59,13 @@ class ModifyUsersTable extends Migration
         });
     }
 
+    private function isPgsql()
+    {
+        $connection = config('database.default');
+        $driver = config("database.connections.{$connection}.driver");
+        return $driver === 'pgsql';
+    }
+
     public function down()
     {
         DB::transaction(function () {
@@ -68,9 +73,11 @@ class ModifyUsersTable extends Migration
                 $table->dropColumn('language');
             });
 
-            Schema::table('users', function (Blueprint $table) {
-                $table->dropIndex('users_email_null_deleted_at');
-            });
+            if ($this->isPgsql()) {
+                Schema::table('users', function (Blueprint $table) {
+                    $table->dropIndex('users_email_null_deleted_at');
+                });
+            }
 
             Schema::table('users', function (Blueprint $table) {
                 $table->dropUnique(['email', 'deleted_at']);
