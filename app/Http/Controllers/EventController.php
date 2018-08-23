@@ -21,7 +21,7 @@ class EventController extends Controller
                 'title' => head(explode('|', $tag->name)),
                 'count' => with(clone $events)
                     ->filter([
-                        'search' => explode('|', $tag->name)
+                        'search' => explode('|', $tag->name),
                     ])
                     ->count(),
             ];

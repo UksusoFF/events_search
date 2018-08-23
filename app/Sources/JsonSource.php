@@ -26,8 +26,6 @@ class JsonSource implements SourceInterface
 
         $items = array_get($array, $this->config->map_items, []);
 
-        //$test = collect($items)->filter(function ($item) {return empty($item['start_date']); });
-
         return collect(array_map(function ($item) {
             $date = array_get($item, $this->config->map_date);
             return [

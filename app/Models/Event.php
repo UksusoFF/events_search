@@ -18,7 +18,6 @@ use Venturecraft\Revisionable\RevisionableTrait as Revisionable;
  * @property \Carbon\Carbon|null $date
  * @property \Carbon\Carbon $updated_at
  * @property \Carbon\Carbon $created_at
- * @property-read mixed $resource_url
  * @property-read \Illuminate\Database\Eloquent\Collection|\Venturecraft\Revisionable\Revision[] $revisionHistory
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event filter($input = array(), $filter = null)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event paginateFilter($perPage = null, $columns = array(), $pageName = 'page', $page = null)
@@ -59,24 +58,9 @@ class Event extends Model
         'date',
     ];
 
-    protected $hidden = [
-        //
-    ];
-
     protected $dates = [
         'date',
         'updated_at',
         'created_at',
     ];
-
-    protected $appends = [
-        'resource_url',
-    ];
-
-    /* ************************ ACCESSOR ************************* */
-
-    public function getResourceUrlAttribute()
-    {
-        return url('/admin/events/' . $this->getKey());
-    }
 }

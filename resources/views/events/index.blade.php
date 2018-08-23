@@ -4,9 +4,7 @@
     <div class="row">
         <div class="col-sm-2">
             <div class="text-center">
-                <a href="{{ action('Admin\SourcesController@index') }}">
-                    <img src="{{ auth()->user()->avatar }}" class="rounded">
-                </a>
+                <img src="{{ auth()->user()->avatar }}" class="rounded">
             </div>
             <h2>{{ $events->total() }}</h2>
             <a href="{{ action('EventController@check') }}" class="btn btn-info">Run check</a>

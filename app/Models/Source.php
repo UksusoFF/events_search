@@ -21,7 +21,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $map_date_format
  * @property \Carbon\Carbon $updated_at
  * @property \Carbon\Carbon $created_at
- * @property-read mixed $resource_url
  * @property-read \App\Models\User $user
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Source whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Source whereId($value)
@@ -54,26 +53,10 @@ class Source extends Model
         'map_date_format',
     ];
 
-    protected $hidden = [
-    ];
-
     protected $dates = [
         'updated_at',
         'created_at',
     ];
-
-    protected $appends = [
-        'resource_url',
-    ];
-
-    /* ************************ ACCESSOR ************************* */
-
-    public function getResourceUrlAttribute()
-    {
-        return url('/admin/sources/' . $this->getKey());
-    }
-
-    /* ************************ RELATIONS ************************ */
 
     public function user()
     {
