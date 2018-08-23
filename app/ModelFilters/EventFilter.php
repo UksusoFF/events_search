@@ -4,7 +4,7 @@ namespace App\ModelFilters;
 
 use Carbon\Carbon;
 use EloquentFilter\ModelFilter;
-use Illuminate\Database\Query\Builder;
+use Illuminate\Database\Eloquent\Builder;
 
 class EventFilter extends ModelFilter
 {
