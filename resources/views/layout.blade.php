@@ -15,10 +15,12 @@
         @endif
         <div class="row">
             <div class="col-sm-2">
-                <div class="text-center">
-                    <img src="{{ auth()->user()->avatar }}" class="rounded">
-                </div>
-                <hr>
+                @auth
+                    <div class="text-center">
+                        <img src="{{ auth()->user()->avatar }}" class="rounded">
+                    </div>
+                    <hr>
+                @endauth
                 @yield('sidebar')
             </div>
             <div class="col-sm-10">
