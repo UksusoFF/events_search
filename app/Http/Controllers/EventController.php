@@ -58,14 +58,14 @@ class EventController extends Controller
         try {
             $eventComponent->refresh();
 
-            $result = [
-                'success' => true,
+            $message = [
+                'level' => 'success',
                 'text' => 'Events successfully updated!',
             ];
         } catch (Exception $e) {
             logger()->error($e->getMessage());
-            $result = [
-                'success' => false,
+            $message = [
+                'level' => 'error',
                 'text' => $e->getMessage(),
             ];
         }
@@ -77,7 +77,7 @@ class EventController extends Controller
                 ],
             ],
         ])->with([
-            'message' => $result,
+            'message' => $message,
         ]);
     }
 }

@@ -8,11 +8,6 @@
 </head>
 <body>
     <div class="container">
-        @if(session()->has('message'))
-            <div class="alert alert-{{ session()->get('message')['success'] ? 'success' : 'danger' }}" role="alert">
-                {{ session()->get('message')['text'] }}
-            </div>
-        @endif
         <div class="row">
             <div class="col-sm-2">
                 @auth
@@ -29,5 +24,12 @@
         </div>
     </div>
     <script src="{{ mix('/scripts/app.js') }}"></script>
+    <script type="text/javascript">
+        @if(session()->has('message'))
+            toastr.options.timeOut = 0;
+            toastr.options.extendedTimeOut = 0;
+            toastr.{{ session()->get('message')['level'] }}("{{ session()->get('message')['text'] }}");
+        @endif
+    </script>
 </body>
 </html>
