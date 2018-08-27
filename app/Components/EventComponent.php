@@ -33,25 +33,27 @@ class EventComponent
                 }
                 $events = $events->merge($src->getEvents());
             }
-        }
 
-        $events->filter(function ($event) {
-            return array_has(array_filter($event), [
-                'uuid',
-                'title',
-                'date',
-            ]);
-        })->each(function ($event) {
-            $e = Event::where('uuid', $event['uuid'])->firstOrNew([
-                'uuid' => $event['uuid'],
-            ]);
-            $e->fill([
-                'title' => $event['title'],
-                'description' => $event['description'],
-                'image' => $event['image'],
-                'date' => $event['date'],
-            ]);
-            $e->save();
-        });
+            $events->filter(function ($event) {
+                return array_has(array_filter($event), [
+                    'uuid',
+                    'title',
+                    'date',
+                ]);
+            })->each(function ($event) use ($user) {
+                $params = [
+                    'uuid' => $event['uuid'],
+                    'user_id' => $user->id,
+                ];
+                $e = Event::where($params)->firstOrNew($params);
+                $e->fill([
+                    'title' => $event['title'],
+                    'description' => $event['description'],
+                    'image' => $event['image'],
+                    'date' => $event['date'],
+                ]);
+                $e->save();
+            });
+        }
     }
 }

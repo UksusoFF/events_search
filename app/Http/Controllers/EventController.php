@@ -12,9 +12,12 @@ class EventController extends Controller
 {
     public function index(Request $request)
     {
-        $events = Event::where('date', '>=', Carbon::now());
+        /** @var \App\Models\User $user */
+        $user = auth()->user();
 
-        $tags = auth()->user()->tags->map(function ($tag) use ($events) {
+        $events = $user->events()->where('date', '>=', Carbon::now());
+
+        $tags = $user->tags->map(function ($tag) use ($events) {
             $tag->count = with(clone $events)
                 ->filter([
                     'tags' => [
@@ -25,7 +28,7 @@ class EventController extends Controller
             return $tag;
         })->sortByDesc('count');
 
-        $sources = auth()->user()->sources->map(function ($source) use ($events) {
+        $sources = $user->sources->map(function ($source) use ($events) {
             $source->count = with(clone $events)
                 ->filter([
                     'sources' => [

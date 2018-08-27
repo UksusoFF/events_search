@@ -16,6 +16,7 @@ use Illuminate\Notifications\Notifiable;
  * @property string|null $remember_token
  * @property \Carbon\Carbon|null $created_at
  * @property \Carbon\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Event[] $events
  * @property-read mixed $avatar
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Source[] $sources
@@ -63,5 +64,10 @@ class User extends Authenticatable
     public function sources()
     {
         return $this->hasMany(Source::class);
+    }
+
+    public function events()
+    {
+        return $this->hasMany(Event::class);
     }
 }
