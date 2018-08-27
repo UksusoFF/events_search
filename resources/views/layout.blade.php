@@ -26,6 +26,7 @@
     <script src="{{ mix('/scripts/app.js') }}"></script>
     <script type="text/javascript">
         @if(session()->has('message'))
+            toastr.options.closeButton = true;
             toastr.options.timeOut = 0;
             toastr.options.extendedTimeOut = 0;
             toastr.{{ session()->get('message')['level'] }}("{{ session()->get('message')['text'] }}");
