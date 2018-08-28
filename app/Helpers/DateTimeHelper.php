@@ -52,8 +52,12 @@ class DateTimeHelper
             return Carbon::createFromTimestamp($string);
         }
 
-        if (!empty($regex) && preg_match($regex, $string, $matches)) {
-            $string = head($matches);
+        if (!empty($regex)) {
+            if (preg_match($regex, $string, $matches)) {
+                $string = head($matches);
+            } else {
+                return null;
+            }
         }
 
         $string = $this->replaceLocalizedMonthNames($string);
