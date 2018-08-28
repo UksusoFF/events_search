@@ -22,6 +22,7 @@
                         'map_image',
                         'map_date',
                         'map_date_format',
+                        'map_date_regex',
                     ] as $field)
                         <div class="form-group">
                             <label for="source-{{ $model['id'] or 'new' }}-{{ $field }}">{{ $field }}</label>

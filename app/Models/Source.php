@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $map_image
  * @property string|null $map_date
  * @property string|null $map_date_format
+ * @property string|null $map_date_regex
  * @property \Carbon\Carbon $updated_at
  * @property \Carbon\Carbon $created_at
  * @property-read \App\Models\User $user
@@ -26,6 +27,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Source whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Source whereMapDate($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Source whereMapDateFormat($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Source whereMapDateRegex($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Source whereMapDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Source whereMapId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Source whereMapImage($value)
@@ -52,6 +54,7 @@ class Source extends Model
         'map_image',
         'map_date',
         'map_date_format',
+        'map_date_regex',
     ];
 
     protected $dates = [

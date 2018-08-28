@@ -35,6 +35,7 @@ class FillSourcesForVkontakte extends Migration
                 'map_image' => 'photo_200',
                 'map_date' => 'start_date',
                 'map_date_format' => 'timestamp',
+                'map_date_regex' => null,
                 'updated_at' => \Carbon\Carbon::now(),
                 'created_at' => \Carbon\Carbon::now(),
             ]);

@@ -27,6 +27,7 @@ class SourceController extends Controller
             'map_image',
             'map_date',
             'map_date_format',
+            'map_date_regex',
         ]));
         $source->user_id = auth()->id();
         $source->save();
@@ -46,6 +47,7 @@ class SourceController extends Controller
             'map_image',
             'map_date',
             'map_date_format',
+            'map_date_regex',
         ]));
         $source->save();
 

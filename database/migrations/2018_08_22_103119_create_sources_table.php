@@ -21,6 +21,7 @@ class CreateSourcesTable extends Migration
             $table->string('map_image')->nullable();
             $table->string('map_date')->nullable();
             $table->string('map_date_format')->nullable();
+            $table->string('map_date_regex')->nullable();
             $table->timestamp('updated_at')->useCurrent();
             $table->timestamp('created_at')->useCurrent();
 
