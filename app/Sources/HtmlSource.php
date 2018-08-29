@@ -100,14 +100,15 @@ class HtmlSource implements SourceInterface
 
         if ($node->count()) {
             if ($node->nodeName() == 'img') {
-                return $node->image()->getUri();
+                $value = $node->image()->getUri();
             } elseif ($node->nodeName() == 'a') {
-                return $node->link()->getUri();
+                $value = $node->link()->getUri();
             } else {
-                return implode(PHP_EOL, $node->each(function (Crawler $child) {
+                $value = implode(PHP_EOL, $node->each(function (Crawler $child) {
                     return $child->text();
                 }));
             }
+            return trim($value);
         } else {
             return null;
         }

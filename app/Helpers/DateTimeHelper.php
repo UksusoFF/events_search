@@ -33,6 +33,20 @@ class DateTimeHelper
         return $string;
     }
 
+    private function isLocalizedToday(string $string) {
+        return in_array(mb_strtolower($string), [
+            'сегодня',
+            'today',
+        ]);
+    }
+
+    private function isLocalizedTomorrow(string $string) {
+        return in_array(mb_strtolower($string), [
+            'завтра',
+            'tomorrow',
+        ]);
+    }
+
     /**
      * @param null|string $string
      * @param null|string $format
@@ -62,7 +76,13 @@ class DateTimeHelper
 
         $string = $this->replaceLocalizedMonthNames($string);
 
-        $date = Carbon::createFromFormat("!$format", $string);
+        if ($this->isLocalizedToday($string)) {
+            $date = Carbon::today();
+        } elseif ($this->isLocalizedTomorrow($string)) {
+            $date = Carbon::tomorrow();
+        } else {
+            $date = Carbon::createFromFormat("!$format", $string);
+        }
 
         if (!str_contains($format, [
             'Y', 'y',
