@@ -29,7 +29,7 @@
             toastr.options.closeButton = true;
             toastr.options.timeOut = 0;
             toastr.options.extendedTimeOut = 0;
-            toastr.{{ session()->get('message')['level'] }}("{{ session()->get('message')['text'] }}");
+            toastr.{{ session()->get('message')['level'] }}("{!! str_replace(PHP_EOL, '', nl2br(session()->get('message')['text'])) !!}");
         @endif
     </script>
 </body>
