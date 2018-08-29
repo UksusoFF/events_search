@@ -67,7 +67,7 @@ class DateTimeHelper
         }
 
         if (!empty($regex)) {
-            if (preg_match($regex, $string, $matches)) {
+            if (preg_match("/$regex/u", $string, $matches)) {
                 $string = head($matches);
             } else {
                 return null;
