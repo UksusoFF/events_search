@@ -56,17 +56,26 @@ class EventController extends Controller
         ]);
     }
 
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Components\EventComponent $eventComponent
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
     public function check(Request $request, EventComponent $eventComponent)
     {
+        /** @var \App\Models\User $user */
+        $user = auth()->user();
+
         try {
-            $eventComponent->refresh();
+            $eventComponent->refresh($user->sources);
 
             $message = [
                 'level' => 'success',
                 'text' => 'Events successfully updated!',
             ];
         } catch (Exception $e) {
-            logger()->error($e->getMessage());
             $message = [
                 'level' => 'error',
                 'text' => $e->getMessage(),

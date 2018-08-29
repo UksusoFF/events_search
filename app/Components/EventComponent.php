@@ -3,7 +3,6 @@
 namespace App\Components;
 
 use App\Models\Event;
-use App\Models\User;
 use App\Sources\HtmlSource;
 use App\Sources\JsonSource;
 use Carbon\Carbon;
@@ -11,39 +10,36 @@ use Carbon\Carbon;
 class EventComponent
 {
     /**
-     * @throws \Exception
+     * @param \Illuminate\Database\Eloquent\Collection|\App\Models\Source[] $sources
+     *
      * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Exception
      */
-    public function refresh()
+    public function refresh($sources)
     {
         Event::where('date', '<', Carbon::yesterday())->delete();
 
-        $events = collect();
-
-        foreach (User::all() as $user) {
-            foreach ($user->sources as $source) {
-                /* @var \App\Sources\SourceInterface $src */
-                switch ($source->type) {
-                    case 'json':
-                        $src = new JsonSource($source);
-                        break;
-                    case 'html':
-                        $src = new HtmlSource($source);
-                        break;
-                }
-                $events = $events->merge($src->getEvents());
+        foreach ($sources as $source) {
+            /* @var \App\Sources\SourceInterface $src */
+            switch ($source->type) {
+                case 'json':
+                    $src = new JsonSource($source);
+                    break;
+                case 'html':
+                    $src = new HtmlSource($source);
+                    break;
             }
 
-            $events->filter(function ($event) {
+            $src->getEvents()->filter(function ($event) {
                 return array_has(array_filter($event), [
                     'uuid',
                     'title',
                     'date',
                 ]);
-            })->each(function ($event) use ($user) {
+            })->each(function ($event) use ($source) {
                 $params = [
                     'uuid' => $event['uuid'],
-                    'user_id' => $user->id,
+                    'user_id' => $source->user->id,
                 ];
                 $e = Event::where($params)->firstOrNew($params);
                 $e->fill([

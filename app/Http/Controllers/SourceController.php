@@ -2,55 +2,92 @@
 
 namespace App\Http\Controllers;
 
+use App\Components\EventComponent;
 use App\Models\Source;
+use DB;
+use Exception;
 use Illuminate\Http\Request;
 
 class SourceController extends Controller
 {
-    public function index(Request $request)
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Components\EventComponent $eventComponent
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Exception
+     */
+    public function store(Request $request, EventComponent $eventComponent)
     {
-        return view('sources.index', [
-            'sources' => Source::paginate(),
-        ]);
-    }
-
-    public function store(Request $request)
-    {
-        $source = new Source($request->only([
-            'title',
-            'type',
-            'source',
-            'map_items',
-            'map_id',
-            'map_title',
-            'map_description',
-            'map_image',
-            'map_date',
-            'map_date_format',
-            'map_date_regex',
-        ]));
+        $source = new Source();
         $source->user_id = auth()->id();
-        $source->save();
 
-        return redirect()->action('EventController@index');
+        return $this->fillCheckAndSave($request, $source, $eventComponent);
     }
 
-    public function update(Request $request, Source $source)
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Source $source
+     * @param \App\Components\EventComponent $eventComponent
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Exception
+     */
+    public function update(Request $request, Source $source, EventComponent $eventComponent)
     {
-        $source->fill($request->only([
-            'type',
-            'source',
-            'map_items',
-            'map_id',
-            'map_title',
-            'map_description',
-            'map_image',
-            'map_date',
-            'map_date_format',
-            'map_date_regex',
-        ]));
-        $source->save();
+        return $this->fillCheckAndSave($request, $source, $eventComponent);
+    }
 
-        return redirect()->action('EventController@index');
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Source $source
+     * @param \App\Components\EventComponent $eventComponent
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Exception
+     */
+    private function fillCheckAndSave(Request $request, Source $source, EventComponent $eventComponent)
+    {
+        DB::beginTransaction();
+
+        try {
+            $source->fill($request->only([
+                'title',
+                'type',
+                'source',
+                'map_items',
+                'map_id',
+                'map_title',
+                'map_description',
+                'map_image',
+                'map_date',
+                'map_date_format',
+                'map_date_regex',
+            ]));
+            $source->save();
+
+            $eventComponent->refresh([$source]);
+
+            DB::commit();
+
+            $message = [
+                'level' => 'success',
+                'text' => 'Events successfully updated!',
+            ];
+        } catch (Exception $e) {
+            DB::rollBack();
+
+            $message = [
+                'level' => 'error',
+                'text' => $e->getMessage(),
+            ];
+        }
+
+        return redirect()->action('EventController@index')->with([
+            'message' => $message,
+        ]);
     }
 }

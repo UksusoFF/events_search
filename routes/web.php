@@ -24,7 +24,6 @@ Route::prefix('tags')->group(function () {
 });
 
 Route::prefix('sources')->group(function () {
-    Route::get('/', 'SourceController@index');
     Route::post('store', 'SourceController@store');
     Route::post('{source}/update', 'SourceController@update');
 });
