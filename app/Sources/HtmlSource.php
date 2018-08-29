@@ -108,7 +108,7 @@ class HtmlSource implements SourceInterface
                     return $child->text();
                 }));
             }
-            return trim($value);
+            return trim(str_replace("\xc2\xa0", ' ', $value));
         } else {
             return null;
         }
