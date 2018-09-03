@@ -159,5 +159,4 @@ class HtmlSource implements SourceInterface
             $this->config->map_date_regex
         );
     }
-
 }

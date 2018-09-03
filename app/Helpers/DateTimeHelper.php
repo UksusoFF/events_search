@@ -33,14 +33,16 @@ class DateTimeHelper
         return $string;
     }
 
-    private function isLocalizedToday(string $string) {
+    private function isLocalizedToday(string $string)
+    {
         return in_array(mb_strtolower($string), [
             'сегодня',
             'today',
         ]);
     }
 
-    private function isLocalizedTomorrow(string $string) {
+    private function isLocalizedTomorrow(string $string)
+    {
         return in_array(mb_strtolower($string), [
             'завтра',
             'tomorrow',
