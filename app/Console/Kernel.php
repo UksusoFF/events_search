@@ -2,14 +2,14 @@
 
 namespace App\Console;
 
-use App\Console\Commands\EventsCheckCommand;
+use App\Console\Commands\EventRefreshCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
 {
     protected $commands = [
-        EventsCheckCommand::class,
+        EventRefreshCommand::class,
     ];
 
     protected function schedule(Schedule $schedule)

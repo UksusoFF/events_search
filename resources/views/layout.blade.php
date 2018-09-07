@@ -25,12 +25,12 @@
     </div>
     <script src="{{ mix('/scripts/app.js') }}"></script>
     <script type="text/javascript">
-        @if(session()->has('message'))
-            toastr.options.closeButton = true;
-            toastr.options.timeOut = 0;
-            toastr.options.extendedTimeOut = 0;
-            toastr.{{ session()->get('message')['level'] }}("{!! str_replace(PHP_EOL, '', nl2br(session()->get('message')['text'])) !!}");
-        @endif
+        toastr.options.closeButton = true;
+        toastr.options.timeOut = 0;
+        toastr.options.extendedTimeOut = 0;
+        @foreach(session()->get('messages', []) as $message)
+            toastr.{{ $message['level'] }}("{!! str_replace(PHP_EOL, '', nl2br($message['text'])) !!}");
+        @endforeach
     </script>
 </body>
 </html>

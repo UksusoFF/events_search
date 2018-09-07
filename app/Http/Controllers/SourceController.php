@@ -69,7 +69,7 @@ class SourceController extends Controller
             ]));
             $source->save();
 
-            $eventComponent->refresh([$source]);
+            $eventComponent->refresh($source);
 
             DB::commit();
 

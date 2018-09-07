@@ -48,18 +48,26 @@ class EventController extends Controller
         /** @var \App\Models\User $user */
         $user = auth()->user();
 
-        try {
-            $eventComponent->refresh($user->sources);
+        $messages = [];
 
-            $message = [
-                'level' => 'success',
-                'text' => 'Events successfully updated!',
-            ];
-        } catch (Exception $e) {
-            $message = [
-                'level' => 'error',
-                'text' => $e->getMessage(),
-            ];
+        foreach ($user->sources as $source) {
+            try {
+                $eventComponent->refresh($source);
+                $messages[] = [
+                    'level' => 'success',
+                    'text' => trans('source.update.success', [
+                        'source' => $source->title,
+                    ]),
+                ];
+            } catch (Exception $e) {
+                $messages[] = [
+                    'level' => 'error',
+                    'text' => trans('source.update.fail', [
+                        'source' => $source->title,
+                        'error' => $e->getMessage(),
+                    ]),
+                ];
+            }
         }
 
         return redirect()->action('EventController@index', [
@@ -69,7 +77,7 @@ class EventController extends Controller
                 ],
             ],
         ])->with([
-            'message' => $message,
+            'messages' => $messages,
         ]);
     }
 }
