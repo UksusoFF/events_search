@@ -15,37 +15,17 @@ class EventController extends Controller
         /** @var \App\Models\User $user */
         $user = auth()->user();
 
-        $events = $user->events()->where('date', '>=', Carbon::now());
-
-        $tags = $user->tags->map(function ($tag) use ($events) {
-            $tag->count = with(clone $events)
-                ->filter([
-                    'tags' => [
-                        $tag->id,
-                    ],
-                ])
-                ->count();
-            return $tag;
-        })->sortByDesc('count');
-
-        $sources = $user->sources->map(function ($source) use ($events) {
-            $source->count = with(clone $events)
-                ->filter([
-                    'sources' => [
-                        $source->id,
-                    ],
-                ])
-                ->count();
-            return $source;
-        })->sortByDesc('count');
-
         return view('events.index', [
-            'events' => $events
+            'events' => $user->events()
+                ->whereDate('date', '>=', Carbon::now())
                 ->filter($request->input('f', []))
                 ->sortable(['date'])
                 ->paginate(),
-            'tags' => $tags,
-            'sources' => $sources,
+            'sources' => $user->sources()
+                ->with('tags')
+                ->withCount('events')
+                ->get()
+                ->sortByDesc('events_count'),
         ]);
     }
 

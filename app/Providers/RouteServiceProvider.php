@@ -4,7 +4,7 @@ namespace App\Providers;
 
 use App\Models\Event;
 use App\Models\Source;
-use App\Tag;
+use App\Models\Tag;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Route;
 

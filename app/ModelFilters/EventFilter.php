@@ -2,7 +2,7 @@
 
 namespace App\ModelFilters;
 
-use App\Tag;
+use App\Models\Tag;
 use Carbon\Carbon;
 use EloquentFilter\ModelFilter;
 use Illuminate\Database\Eloquent\Builder;
@@ -13,7 +13,7 @@ class EventFilter extends ModelFilter
     {
         switch (head($switch)) {
             case 'today':
-                return $this->whereDate('created_at', Carbon::today());
+                return $this->whereDate('events.created_at', Carbon::today());
                 break;
             default:
                 return $this;
@@ -24,7 +24,7 @@ class EventFilter extends ModelFilter
     {
         switch (head($switch)) {
             case 'today':
-                return $this->whereDate('updated_at', Carbon::today());
+                return $this->whereDate('events.updated_at', Carbon::today());
                 break;
             default:
                 return $this;
@@ -42,8 +42,8 @@ class EventFilter extends ModelFilter
 
         return $this->where(function (Builder $query) use ($searchParts) {
             foreach ($searchParts as $searchPart) {
-                $query->orWhere('description', 'LIKE', '%' . $searchPart . '%')
-                    ->orWhere('title', 'LIKE', '%' . $searchPart . '%');
+                $query->orWhere('events.description', 'LIKE', '%' . $searchPart . '%')
+                    ->orWhere('events.title', 'LIKE', '%' . $searchPart . '%');
             }
             return $query;
         });
@@ -51,11 +51,6 @@ class EventFilter extends ModelFilter
 
     public function sources($ids)
     {
-        return $this->where(function (Builder $query) use ($ids) {
-            foreach ($ids as $id) {
-                $query->orWhere('uuid', 'LIKE', "%\_{$id}\_%");
-            }
-            return $query;
-        });
+        return $this->whereIn('events.source_id', $ids);
     }
 }

@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Tag;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -20,7 +19,6 @@ use Illuminate\Notifications\Notifiable;
  * @property-read mixed $avatar
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Source[] $sources
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Tag[] $tags
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereEmail($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereId($value)
@@ -56,11 +54,6 @@ class User extends Authenticatable
         return "https://www.gravatar.com/avatar/$hash";
     }
 
-    public function tags()
-    {
-        return $this->hasMany(Tag::class);
-    }
-
     public function sources()
     {
         return $this->hasMany(Source::class);
@@ -68,6 +61,6 @@ class User extends Authenticatable
 
     public function events()
     {
-        return $this->hasMany(Event::class);
+        return $this->hasManyThrough(Event::class, Source::class);
     }
 }

@@ -19,8 +19,8 @@ Route::prefix('events')->group(function () {
 });
 
 Route::prefix('tags')->group(function () {
-    Route::post('store', 'TagController@store');
-    Route::post('{tag}/update', 'TagController@update');
+    Route::post('{source}/store', 'TagController@store');
+    Route::post('{source}/{tag}/update', 'TagController@update');
 });
 
 Route::prefix('sources')->group(function () {

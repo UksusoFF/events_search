@@ -11,7 +11,7 @@ use Venturecraft\Revisionable\RevisionableTrait as Revisionable;
  * App\Models\Event
  *
  * @property int $id
- * @property int $user_id
+ * @property int $source_id
  * @property string $uuid
  * @property string|null $title
  * @property string|null $description
@@ -32,9 +32,9 @@ use Venturecraft\Revisionable\RevisionableTrait as Revisionable;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereImage($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereLike($column, $value, $boolean = 'and')
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereSourceId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereUserId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereUuid($value)
  * @mixin \Eloquent
  */
@@ -53,8 +53,8 @@ class Event extends Model
     use Revisionable;
 
     protected $fillable = [
-        'user_id',
         'uuid',
+        'source_id',
         'title',
         'description',
         'image',

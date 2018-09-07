@@ -2,23 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Tag;
+use App\Models\Source;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 
 class TagController extends Controller
 {
-    public function store(Request $request)
+    public function store(Request $request, Source $source)
     {
         $tag = new Tag([
             'name' => $request->input('name'),
         ]);
-        $tag->user_id = auth()->id();
+        $tag->source_id = $source->id;
         $tag->save();
 
         return redirect()->action('EventController@index');
     }
 
-    public function update(Request $request, Tag $tag)
+    public function update(Request $request, Source $source, Tag $tag)
     {
         $tag->fill([
             'name' => $request->input('name'),

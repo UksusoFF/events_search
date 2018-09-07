@@ -1,12 +1,13 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
 class CreateRevisionsTable extends Migration
 {
     public function up()
     {
-        Schema::create('revisions', function ($table) {
+        Schema::create('revisions', function (Blueprint $table) {
             $table->increments('id');
             $table->string('revisionable_type');
             $table->integer('revisionable_id');

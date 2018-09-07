@@ -39,9 +39,9 @@ class EventComponent
             })->each(function ($event) use ($source) {
                 $params = [
                     'uuid' => $event['uuid'],
-                    'user_id' => $source->user->id,
+                    'source_id' => $source->id,
                 ];
-                $e = Event::where($params)->firstOrNew($params);
+                $e = Event::firstOrNew($params);
                 $e->fill([
                     'title' => $event['title'],
                     'description' => $event['description'],

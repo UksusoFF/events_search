@@ -22,6 +22,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $map_date_regex
  * @property \Carbon\Carbon $updated_at
  * @property \Carbon\Carbon $created_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Event[] $events
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Tag[] $tags
  * @property-read \App\Models\User $user
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Source whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Source whereId($value)
@@ -61,6 +63,16 @@ class Source extends Model
         'updated_at',
         'created_at',
     ];
+
+    public function events()
+    {
+        return $this->hasMany(Event::class);
+    }
+
+    public function tags()
+    {
+        return $this->hasMany(Tag::class);
+    }
 
     public function user()
     {

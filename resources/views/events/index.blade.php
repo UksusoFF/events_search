@@ -14,13 +14,18 @@
     ]])
 
     <hr>
-    <h2>Sources</h2>
+    <span class="h3">Sources</span>
+    @include('sources.create_edit', [
+        'action' => action('SourceController@store'),
+        'model' => null,
+        'icon' => 'plus',
+    ])
     @foreach($sources as $source)
         <div>
             @include('partials.link_filter', ['params' => [
                 'key' => 'sources',
                 'value' => $source->id,
-                'title' => "{$source->title} ({$source->count})",
+                'title' => "{$source->title} ({$source->events_count})",
             ]])
 
             @include('sources.create_edit', [
@@ -31,39 +36,38 @@
                 'icon' => 'pencil',
             ])
         </div>
+
+        <span class="h5">Tags</span>
+        @include('tags.create_edit', [
+            'action' => action('TagController@store', [
+                'source' => $source,
+            ]),
+            'model' => null,
+            'icon' => 'plus',
+        ])
+
+        @foreach($source->tags as $tag)
+            <div>
+                @include('partials.link_filter', ['params' => [
+                    'key' => 'tags',
+                    'value' => $tag->id,
+                    'title' => head(explode('|', $tag->name)),
+                ]])
+
+                @include('tags.create_edit', [
+                    'action' => action('TagController@update', [
+                        'source' => $source,
+                        'tag' => $tag['id'],
+                    ]),
+                    'model' => $tag,
+                    'icon' => 'pencil',
+                ])
+            </div>
+        @endforeach
+
+        <hr>
     @endforeach
 
-    @include('sources.create_edit', [
-        'action' => action('SourceController@store'),
-        'model' => null,
-        'icon' => 'plus',
-    ])
-
-    <hr>
-    <h2>Tags</h2>
-    @foreach($tags as $tag)
-        <div>
-            @include('partials.link_filter', ['params' => [
-                'key' => 'tags',
-                'value' => $tag->id,
-                'title' => head(explode('|', $tag->name)) . " ({$tag->count})",
-            ]])
-
-            @include('tags.create_edit', [
-                'action' => action('TagController@update', [
-                    'tag' => $tag['id'],
-                ]),
-                'model' => $tag,
-                'icon' => 'pencil',
-            ])
-        </div>
-    @endforeach
-
-    @include('tags.create_edit', [
-        'action' => action('TagController@store'),
-        'model' => null,
-        'icon' => 'plus',
-    ])
 @endsection
 
 @section('content')
