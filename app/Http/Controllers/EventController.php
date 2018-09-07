@@ -12,6 +12,7 @@ class EventController extends Controller
 {
     public function index(Request $request)
     {
+        /** @var \App\Models\User $user */
         $user = auth()->user();
 
         return view('events.index', [
