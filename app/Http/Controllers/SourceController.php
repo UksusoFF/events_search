@@ -75,19 +75,26 @@ class SourceController extends Controller
 
             $message = [
                 'level' => 'success',
-                'text' => 'Events successfully updated!',
+                'text' => trans('source.update.success', [
+                    'source' => $source->title,
+                ]),
             ];
         } catch (Exception $e) {
             DB::rollBack();
 
             $message = [
                 'level' => 'error',
-                'text' => $e->getMessage(),
+                'text' => trans('source.update.fail', [
+                    'source' => $source->title,
+                    'error' => $e->getMessage(),
+                ]),
             ];
         }
 
         return redirect()->action('EventController@index')->with([
-            'message' => $message,
+            'messages' => [
+                $message
+            ],
         ]);
     }
 }
