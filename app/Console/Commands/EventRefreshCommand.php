@@ -5,9 +5,9 @@ namespace App\Console\Commands;
 use App\Components\EventComponent;
 use App\Models\Source;
 use App\Models\User;
-use Carbon\Carbon;
 use Exception;
 use Illuminate\Console\Command;
+use Illuminate\Support\Carbon;
 
 class EventRefreshCommand extends Command
 {

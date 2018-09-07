@@ -4,11 +4,11 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 cd ${SCRIPT_DIR}
 
-. $SCRIPTDIR.env
+. ${SCRIPTDIR}.env
 
 php artisan down
 
-if [ $APP_ENV == 'production' ]
+if [ ${APP_ENV} == 'production' ]
 then
     composer install --no-dev
     npm install --production --no-bin-links

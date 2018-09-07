@@ -4,15 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Components\EventComponent;
 use App\Models\Event;
-use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class EventController extends Controller
 {
     public function index(Request $request)
     {
-        /** @var \App\Models\User $user */
         $user = auth()->user();
 
         return view('events.index', [

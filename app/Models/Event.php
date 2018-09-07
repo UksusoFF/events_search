@@ -16,14 +16,14 @@ use Venturecraft\Revisionable\RevisionableTrait as Revisionable;
  * @property string|null $title
  * @property string|null $description
  * @property string|null $image
- * @property \Carbon\Carbon|null $date
- * @property \Carbon\Carbon $updated_at
- * @property \Carbon\Carbon $created_at
+ * @property \Illuminate\Support\Carbon|null $date
+ * @property \Illuminate\Support\Carbon $updated_at
+ * @property \Illuminate\Support\Carbon $created_at
  * @property-read \Illuminate\Database\Eloquent\Collection|\Venturecraft\Revisionable\Revision[] $revisionHistory
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event filter($input = array(), $filter = null)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event paginateFilter($perPage = null, $columns = array(), $pageName = 'page', $page = null)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event simplePaginateFilter($perPage = null, $columns = array(), $pageName = 'page', $page = null)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event sortable($defaultSortParameters = null)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event sortable($defaultParameters = null)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereBeginsWith($column, $value, $boolean = 'and')
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereDate($value)

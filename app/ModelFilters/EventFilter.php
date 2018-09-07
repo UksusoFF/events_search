@@ -3,9 +3,9 @@
 namespace App\ModelFilters;
 
 use App\Models\Tag;
-use Carbon\Carbon;
 use EloquentFilter\ModelFilter;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Carbon;
 
 class EventFilter extends ModelFilter
 {
