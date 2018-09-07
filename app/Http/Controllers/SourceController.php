@@ -61,6 +61,7 @@ class SourceController extends Controller
                 'map_items',
                 'map_id',
                 'map_title',
+                'map_url',
                 'map_description',
                 'map_image',
                 'map_date',
@@ -93,7 +94,7 @@ class SourceController extends Controller
 
         return redirect()->action('EventController@index')->with([
             'messages' => [
-                $message
+                $message,
             ],
         ]);
     }

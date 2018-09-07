@@ -17,6 +17,7 @@ class CreateSourcesTable extends Migration
             $table->string('map_items')->nullable();
             $table->string('map_id')->nullable();
             $table->string('map_title')->nullable();
+            $table->string('map_url')->nullable();
             $table->string('map_description')->nullable();
             $table->string('map_image')->nullable();
             $table->string('map_date')->nullable();

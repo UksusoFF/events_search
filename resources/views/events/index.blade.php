@@ -92,7 +92,7 @@
                                 {{ $event->title }}
                             </a>
                             <hr>
-                            <a href="https://vk.com/event{{ $event->uuid }}">
+                            <a href="{{ $event->url }}" target="_blank">
                                 <img src="{{ $event->image }}" style="max-width: 200px; max-height: 200px;">
                             </a>
                         </td>

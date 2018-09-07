@@ -13,6 +13,7 @@ class CreateEventsTable extends Migration
             $table->unsignedInteger('source_id');
             $table->string('uuid');
             $table->string('title')->nullable();
+            $table->string('url')->nullable();
             $table->longText('description')->nullable();
             $table->longText('image')->nullable();
             $table->timestamp('date')->nullable();

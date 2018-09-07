@@ -14,6 +14,7 @@ use Venturecraft\Revisionable\RevisionableTrait as Revisionable;
  * @property int $source_id
  * @property string $uuid
  * @property string|null $title
+ * @property string|null $url
  * @property string|null $description
  * @property string|null $image
  * @property \Illuminate\Support\Carbon|null $date
@@ -35,6 +36,7 @@ use Venturecraft\Revisionable\RevisionableTrait as Revisionable;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereSourceId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereUrl($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereUuid($value)
  * @mixin \Eloquent
  */
@@ -56,6 +58,7 @@ class Event extends Model
         'uuid',
         'source_id',
         'title',
+        'url',
         'description',
         'image',
         'date',

@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $map_items
  * @property string|null $map_id
  * @property string|null $map_title
+ * @property string|null $map_url
  * @property string|null $map_description
  * @property string|null $map_image
  * @property string|null $map_date
@@ -35,6 +36,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Source whereMapImage($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Source whereMapItems($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Source whereMapTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Source whereMapUrl($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Source whereSource($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Source whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Source whereType($value)
@@ -52,6 +54,7 @@ class Source extends Model
         'map_items',
         'map_id',
         'map_title',
+        'map_url',
         'map_description',
         'map_image',
         'map_date',

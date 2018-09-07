@@ -5,6 +5,7 @@ namespace App\Components;
 use App\Models\Event;
 use App\Sources\HtmlSource;
 use App\Sources\JsonSource;
+use App\Sources\VkSource;
 
 class EventComponent
 {
@@ -18,11 +19,14 @@ class EventComponent
     {
         /* @var \App\Sources\SourceInterface $src */
         switch ($source->type) {
+            case 'html':
+                $src = new HtmlSource($source);
+                break;
             case 'json':
                 $src = new JsonSource($source);
                 break;
-            case 'html':
-                $src = new HtmlSource($source);
+            case 'vk':
+                $src = new VkSource($source);
                 break;
         }
 
@@ -33,13 +37,13 @@ class EventComponent
                 'date',
             ]);
         })->each(function ($event) use ($source) {
-            $params = [
+            $e = Event::firstOrNew([
                 'uuid' => $event['uuid'],
                 'source_id' => $source->id,
-            ];
-            $e = Event::firstOrNew($params);
+            ]);
             $e->fill([
                 'title' => $event['title'],
+                'url' => $event['url'],
                 'description' => $event['description'],
                 'image' => $event['image'],
                 'date' => $event['date'],

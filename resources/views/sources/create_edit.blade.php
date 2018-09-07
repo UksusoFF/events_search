@@ -18,6 +18,7 @@
                         'map_items',
                         'map_id',
                         'map_title',
+                        'map_url',
                         'map_description',
                         'map_image',
                         'map_date',

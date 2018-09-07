@@ -8,13 +8,13 @@ use GuzzleHttp\Client;
 
 class JsonSource implements SourceInterface
 {
-    private $config;
+    protected $config;
 
-    private $client;
+    protected $client;
 
-    private $dateTimeHelper;
+    protected $dateTimeHelper;
 
-    private const ID_PREFIX = 'json';
+    protected const ID_PREFIX = 'json';
 
     public function __construct(Source $source)
     {
@@ -36,6 +36,7 @@ class JsonSource implements SourceInterface
             return [
                 'uuid' => $this->getItemUuid($item),
                 'title' => array_get($item, $this->config->map_title),
+                'url' => $this->getItemUrl($item),
                 'description' => array_get($item, $this->config->map_description),
                 'image' => array_get($item, $this->config->map_image),
                 'date' => $this->getItemDate($item),
@@ -48,7 +49,7 @@ class JsonSource implements SourceInterface
      *
      * @return null|string
      */
-    private function getItemUuid(array $item)
+    protected function getItemUuid(array $item)
     {
         if (empty($this->config->map_id)) {
             return null;
@@ -70,7 +71,7 @@ class JsonSource implements SourceInterface
      *
      * @return \Carbon\Carbon|null
      */
-    private function getItemDate($item)
+    protected function getItemDate($item)
     {
         if (empty($this->config->map_date)) {
             return null;
@@ -85,5 +86,15 @@ class JsonSource implements SourceInterface
             $this->config->map_date_format,
             $this->config->map_date_regex
         );
+    }
+
+    /**
+     * @param array $item
+     *
+     * @return null|string
+     */
+    protected function getItemUrl($item)
+    {
+        return array_get($item, $this->config->map_url);
     }
 }
