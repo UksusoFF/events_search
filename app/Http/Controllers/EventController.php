@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Components\EventComponent;
 use App\Models\Event;
 use Exception;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 
@@ -23,7 +24,9 @@ class EventController extends Controller
                 ->paginate(),
             'sources' => $user->sources()
                 ->with('tags')
-                ->withCount('events')
+                ->withCount(['events' => function (Builder $query) {
+                    $query->whereDate('date', '>=', Carbon::now());
+                }])
                 ->get()
                 ->sortByDesc('events_count'),
         ]);
