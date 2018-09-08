@@ -79,8 +79,7 @@
                 <thead>
                 <tr>
                     <th>Name / Image</th>
-                    <th class="text-right text-nowrap">@sortablelink('created_at')</th>
-                    <th class="text-right text-nowrap">@sortablelink('updated_at')</th>
+                    <th>Source</th>
                     <th class="text-right text-nowrap">@sortablelink('date')</th>
                 </tr>
                 </thead>
@@ -96,8 +95,7 @@
                                 <img src="{{ $event->image }}" style="max-width: 200px; max-height: 200px;">
                             </a>
                         </td>
-                        <td class="text-right">{{ $event->created_at->format('Y-m-d H:i:s') }}</td>
-                        <td class="text-right">{{ $event->updated_at->format('Y-m-d H:i:s') }}</td>
+                        <td class="text-right">{{ $event->source->title }}</td>
                         <td class="text-right">{{ $event->date->format('Y-m-d H:i:s') }}</td>
                     </tr>
                 @endforeach
