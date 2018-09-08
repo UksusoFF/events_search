@@ -27,7 +27,7 @@ class EventRefreshCommand extends Command
     {
         User::all()->each(function (User $user) {
             $user->events()->where('date', '<', Carbon::yesterday())->delete();
-            $user->sources->each(function (Source $source) {
+            $user->sourcesActive->each(function (Source $source) {
                 try {
                     $this->eventComponent->refresh($source);
                     $this->info(trans('source.update.success', [

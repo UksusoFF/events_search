@@ -21,12 +21,14 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $map_date
  * @property string|null $map_date_format
  * @property string|null $map_date_regex
+ * @property int $disabled
  * @property \Illuminate\Support\Carbon $updated_at
  * @property \Illuminate\Support\Carbon $created_at
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Event[] $events
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Tag[] $tags
  * @property-read \App\Models\User $user
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Source whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Source whereDisabled($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Source whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Source whereMapDate($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Source whereMapDateFormat($value)

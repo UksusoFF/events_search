@@ -4,8 +4,6 @@ namespace App\Sources;
 
 class VkSearchSource extends JsonSource
 {
-    protected const ID_PREFIX = 'vk_search';
-
     /**
      * @param array $item
      *

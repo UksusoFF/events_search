@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Components\EventComponent;
 use App\Models\Event;
+use App\Models\Source;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -11,6 +12,15 @@ use Illuminate\Support\Carbon;
 
 class EventController extends Controller
 {
+    protected $eventComponent;
+
+    public function __construct(EventComponent $eventComponent)
+    {
+        parent::__construct();
+
+        $this->eventComponent = $eventComponent;
+    }
+
     public function index(Request $request)
     {
         /** @var \App\Models\User $user */
@@ -39,23 +49,16 @@ class EventController extends Controller
         ]);
     }
 
-    /**
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Components\EventComponent $eventComponent
-     *
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     */
-    public function check(Request $request, EventComponent $eventComponent)
+    public function check(Request $request)
     {
         /** @var \App\Models\User $user */
         $user = auth()->user();
 
         $messages = [];
 
-        foreach ($user->sources as $source) {
+        $user->sourcesActive->each(function (Source $source) use (&$messages) {
             try {
-                $eventComponent->refresh($source);
+                $this->eventComponent->refresh($source);
                 $messages[] = [
                     'level' => 'success',
                     'text' => trans('source.update.success', [
@@ -71,7 +74,7 @@ class EventController extends Controller
                     ]),
                 ];
             }
-        }
+        });
 
         return redirect()->action('EventController@index', [
             'f' => [

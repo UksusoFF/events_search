@@ -6,8 +6,6 @@ use Illuminate\Support\Carbon;
 
 class VkCoverSource extends JsonSource
 {
-    protected const ID_PREFIX = 'vk_cover';
-
     /**
      * @param array $item
      *

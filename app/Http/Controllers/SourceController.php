@@ -68,9 +68,12 @@ class SourceController extends Controller
                 'map_date_format',
                 'map_date_regex',
             ]));
+            $source->disabled = $request->has('disabled');
             $source->save();
 
-            $eventComponent->refresh($source);
+            if (!$source->disabled) {
+                $eventComponent->refresh($source);
+            }
 
             DB::commit();
 

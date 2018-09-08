@@ -19,6 +19,7 @@ use Illuminate\Notifications\Notifiable;
  * @property-read mixed $avatar
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Source[] $sources
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Source[] $sourcesActive
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereEmail($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereId($value)
@@ -57,6 +58,11 @@ class User extends Authenticatable
     public function sources()
     {
         return $this->hasMany(Source::class);
+    }
+
+    public function sourcesActive()
+    {
+        return $this->hasMany(Source::class)->where('disabled', false);
     }
 
     public function events()

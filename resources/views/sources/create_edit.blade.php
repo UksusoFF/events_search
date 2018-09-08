@@ -36,7 +36,8 @@
                     @endforeach
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Save</button>
+                    <input type="submit" name="disabled" value="Save &amp; Disable" class="btn btn-secondary">
+                    <button type="submit" class="btn btn-primary">Save &amp; Enable</button>
                 </div>
             </form>
         </div>
