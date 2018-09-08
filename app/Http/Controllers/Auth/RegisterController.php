@@ -40,6 +40,25 @@ class RegisterController extends Controller
     }
 
     /**
+     * Show the application registration form.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showRegistrationForm()
+    {
+        return env('REGISTRATION_ALLOWED', false) ?
+            view('auth.register') :
+            redirect()->back()->with([
+                'messages' => [
+                    [
+                        'level' => 'error',
+                        'text' => trans('auth.registration_forbidden'),
+                    ],
+                ],
+            ]);
+    }
+
+    /**
      * Get a validator for an incoming registration request.
      *
      * @param  array  $data
