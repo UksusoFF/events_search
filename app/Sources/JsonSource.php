@@ -35,10 +35,10 @@ class JsonSource implements SourceInterface
         return collect(array_map(function ($item) {
             return [
                 'uuid' => $this->getItemUuid($item),
-                'title' => array_get($item, $this->config->map_title),
+                'title' => $this->getValueFromNotation($item, $this->config->map_title),
                 'url' => $this->getItemUrl($item),
-                'description' => array_get($item, $this->config->map_description),
-                'image' => array_get($item, $this->config->map_image),
+                'description' => $this->getValueFromNotation($item, $this->config->map_description),
+                'image' => $this->getValueFromNotation($item, $this->config->map_image),
                 'date' => $this->getItemDate($item),
             ];
         }, $items));
@@ -55,7 +55,7 @@ class JsonSource implements SourceInterface
             return null;
         }
 
-        if (empty($itemValue = array_get($item, $this->config->map_id))) {
+        if (empty($itemValue = $this->getValueFromNotation($item, $this->config->map_id))) {
             return null;
         }
 
@@ -69,7 +69,7 @@ class JsonSource implements SourceInterface
     /**
      * @param array $item
      *
-     * @return \Carbon\Carbon|null
+     * @return \Illuminate\Support\Carbon|null
      */
     protected function getItemDate($item)
     {
@@ -77,7 +77,7 @@ class JsonSource implements SourceInterface
             return null;
         }
 
-        if (empty($itemValue = array_get($item, $this->config->map_date))) {
+        if (empty($itemValue = $this->getValueFromNotation($item, $this->config->map_date))) {
             return null;
         }
 
@@ -95,6 +95,27 @@ class JsonSource implements SourceInterface
      */
     protected function getItemUrl($item)
     {
-        return array_get($item, $this->config->map_url);
+        return $this->getValueFromNotation($item, $this->config->map_url);
+    }
+
+    /**
+     * @param array $item
+     * @param string $notation
+     *
+     * @return null|string
+     */
+    protected function getValueFromNotation(array $item, string $notation)
+    {
+        if (empty($notation)) {
+            return null;
+        }
+
+        $data = data_get($item, $notation, []);
+
+        if (is_array($data)) {
+            return last($data);
+        } else {
+            return $data;
+        }
     }
 }

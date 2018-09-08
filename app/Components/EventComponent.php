@@ -5,7 +5,8 @@ namespace App\Components;
 use App\Models\Event;
 use App\Sources\HtmlSource;
 use App\Sources\JsonSource;
-use App\Sources\VkSource;
+use App\Sources\VkCoverSource;
+use App\Sources\VkSearchSource;
 
 class EventComponent
 {
@@ -25,8 +26,11 @@ class EventComponent
             case 'json':
                 $src = new JsonSource($source);
                 break;
-            case 'vk':
-                $src = new VkSource($source);
+            case 'vk_cover':
+                $src = new VkCoverSource($source);
+                break;
+            case 'vk_search':
+                $src = new VkSearchSource($source);
                 break;
         }
 

@@ -141,7 +141,7 @@ class HtmlSource implements SourceInterface
     /**
      * @param \Symfony\Component\DomCrawler\Crawler $node
      *
-     * @return \Carbon\Carbon|null
+     * @return \Illuminate\Support\Carbon|null
      * @throws \Exception
      */
     protected function getNodeDate(Crawler $node)

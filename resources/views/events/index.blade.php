@@ -21,7 +21,7 @@
         'icon' => 'plus',
     ])
     @foreach($sources as $source)
-        <div>
+        <div class="text-truncate">
             @include('partials.link_filter', ['params' => [
                 'key' => 'sources',
                 'value' => $source->id,

@@ -54,7 +54,7 @@ class DateTimeHelper
      * @param null|string $format
      * @param null|string $regex
      *
-     * @return \Carbon\Carbon|null
+     * @return \Illuminate\Support\Carbon|null
      */
     public function getDateFromFormat(?string $string, ?string $format, ?string $regex)
     {
