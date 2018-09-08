@@ -23,6 +23,6 @@ class VkCoverSource extends JsonSource
      */
     protected function getItemUrl($item)
     {
-        return 'https://vk.com/' . array_get($item, $this->config->map_id);
+        return 'https://vk.com/' . array_get($item, $this->config->map_url);
     }
 }
