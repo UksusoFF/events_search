@@ -9,6 +9,9 @@
 <body>
     <div class="container">
         <div class="row">
+            <div class="col-sm-10">
+                @yield('content')
+            </div>
             <div class="col-sm-2">
                 @auth
                     <div class="text-center">
@@ -17,9 +20,6 @@
                     <hr>
                 @endauth
                 @yield('sidebar')
-            </div>
-            <div class="col-sm-10">
-                @yield('content')
             </div>
         </div>
     </div>
