@@ -13,7 +13,7 @@ class VkCoverSource extends JsonSource
      */
     protected function getItemDate($item)
     {
-        return Carbon::now()->lastOfMonth()->endOfDay();
+        return Carbon::now()->lastOfMonth()->setTime(20, 0, 0);
     }
 
     /**
