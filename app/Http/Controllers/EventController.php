@@ -34,8 +34,9 @@ class EventController extends Controller
                 ->paginate(),
             'sources' => $user->sources()
                 ->with('tags')
-                ->withCount(['events' => function (Builder $query) {
-                    $query->whereDate('date', '>=', Carbon::now());
+                ->withCount(['events' => function (Builder $query) use ($request) {
+                    $query->whereDate('date', '>=', Carbon::now())
+                        ->filter($request->input('f', []));
                 }])
                 ->get()
                 ->sortByDesc('events_count'),
