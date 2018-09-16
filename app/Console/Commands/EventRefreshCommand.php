@@ -36,7 +36,7 @@ class EventRefreshCommand extends Command
                 } catch (Exception $e) {
                     $this->error(trans('source.update.fail', [
                         'source' => $source->title,
-                        'error' => $e->getMessage(),
+                        'error' => htmlentities($e->getMessage()),
                     ]));
                 }
             });

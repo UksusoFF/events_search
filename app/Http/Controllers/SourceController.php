@@ -90,7 +90,7 @@ class SourceController extends Controller
                 'level' => 'error',
                 'text' => trans('source.update.fail', [
                     'source' => $source->title,
-                    'error' => $e->getMessage(),
+                    'error' => htmlentities($e->getMessage()),
                 ]),
             ];
         }
