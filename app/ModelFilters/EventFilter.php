@@ -2,7 +2,6 @@
 
 namespace App\ModelFilters;
 
-use App\Models\Tag;
 use EloquentFilter\ModelFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Carbon;
@@ -31,19 +30,12 @@ class EventFilter extends ModelFilter
         }
     }
 
-    public function tags($ids)
+    public function tags($tags)
     {
-        $searchParts = [];
-
-        foreach ($ids as $id) {
-            $tag = Tag::find($id);
-            $searchParts = array_merge(explode('|', $tag->name), $searchParts);
-        }
-
-        return $this->where(function (Builder $query) use ($searchParts) {
-            foreach ($searchParts as $searchPart) {
-                $query->orWhere('events.description', 'LIKE', '%' . $searchPart . '%')
-                    ->orWhere('events.title', 'LIKE', '%' . $searchPart . '%');
+        return $this->where(function (Builder $query) use ($tags) {
+            foreach (explode('|', implode('|', $tags)) as $tag) {
+                $query->orWhere('events.description', 'LIKE', "%$tag%")
+                    ->orWhere('events.title', 'LIKE', "%$tag%");
             }
             return $query;
         });

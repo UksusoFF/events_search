@@ -34,6 +34,15 @@
                                    value="{{ $model[$field] or '' }}">
                         </div>
                     @endforeach
+
+                    <div class="form-group">
+                        <label for="source-{{ $model['id'] or 'new' }}-tags">Tags</label>
+                        <input type="text"
+                               class="form-control"
+                               id="source-{{ $model['id'] or 'new' }}-tags"
+                               name="tags"
+                               value="{{ isset($model['tags']) ? json_encode($model['tags'], JSON_UNESCAPED_UNICODE) : '' }}">
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <input type="submit" name="disabled" value="Save &amp; Disable" class="btn btn-secondary">

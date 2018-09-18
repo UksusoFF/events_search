@@ -24,8 +24,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $disabled
  * @property \Illuminate\Support\Carbon $updated_at
  * @property \Illuminate\Support\Carbon $created_at
+ * @property string|null $tags
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Event[] $events
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Tag[] $tags
  * @property-read \App\Models\User $user
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Source whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Source whereDisabled($value)
@@ -40,6 +40,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Source whereMapTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Source whereMapUrl($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Source whereSource($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Source whereTags($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Source whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Source whereType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Source whereUpdatedAt($value)
@@ -62,6 +63,7 @@ class Source extends Model
         'map_date',
         'map_date_format',
         'map_date_regex',
+        'tags',
     ];
 
     protected $dates = [
@@ -74,13 +76,18 @@ class Source extends Model
         return $this->hasMany(Event::class);
     }
 
-    public function tags()
-    {
-        return $this->hasMany(Tag::class);
-    }
-
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function setTagsAttribute(array $value)
+    {
+        $this->attributes['tags'] = json_encode($value, JSON_UNESCAPED_UNICODE);
+    }
+
+    public function getTagsAttribute()
+    {
+        return json_decode($this->attributes['tags'], true);
     }
 }

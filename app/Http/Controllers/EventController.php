@@ -6,9 +6,7 @@ use App\Components\EventComponent;
 use App\Models\Event;
 use App\Models\Source;
 use Exception;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 
 class EventController extends Controller
 {
@@ -26,18 +24,15 @@ class EventController extends Controller
         /** @var \App\Models\User $user */
         $user = auth()->user();
 
+        $eventsQuery = $user->events();
+
         return view('events.index', [
-            'events' => $user->events()
-                ->whereDate('date', '>=', Carbon::now())
+            'events' => $eventsQuery
                 ->filter($request->input('f', []))
                 ->sortable(['date'])
                 ->paginate(),
             'sources' => $user->sources()
-                ->with('tags')
-                ->withCount(['events' => function (Builder $query) use ($request) {
-                    $query->whereDate('date', '>=', Carbon::now())
-                        ->filter($request->input('f', []));
-                }])
+                ->withCount('events')
                 ->get()
                 ->sortByDesc('events_count'),
         ]);
