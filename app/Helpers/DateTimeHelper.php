@@ -2,6 +2,7 @@
 
 namespace App\Helpers;
 
+use Exception;
 use Illuminate\Support\Carbon;
 
 class DateTimeHelper
@@ -85,7 +86,11 @@ class DateTimeHelper
         } elseif ($this->isLocalizedTomorrow($string)) {
             $date = Carbon::tomorrow();
         } else {
-            $date = Carbon::createFromFormat("!$format", $string);
+            try {
+                $date = Carbon::createFromFormat("!$format", $string);
+            } catch (Exception $e) {
+                return null;
+            }
         }
 
         if (!str_contains($format, [
