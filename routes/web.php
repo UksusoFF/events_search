@@ -18,11 +18,6 @@ Route::prefix('events')->group(function () {
     Route::get('{event}/show', 'EventController@show');
 });
 
-Route::prefix('tags')->group(function () {
-    Route::post('{source}/store', 'TagController@store');
-    Route::post('{source}/{tag}/update', 'TagController@update');
-});
-
 Route::prefix('sources')->group(function () {
     Route::post('store', 'SourceController@store');
     Route::post('{source}/update', 'SourceController@update');
