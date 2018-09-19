@@ -41,16 +41,12 @@
 @endsection
 
 @section('content')
-    @foreach($sources as $source)
-        @foreach($source->tags as $tag)
-            @if(in_array($source->id, request()->input('f.sources', [])))
-                @include('partials.link_filter', ['params' => [
-                    'key' => 'tags',
-                    'value' => $tag,
-                    'title' => head(explode('|', $tag)),
-                ]])
-            @endif
-        @endforeach
+    @foreach($tags as $tag)
+        @include('partials.link_filter', ['params' => [
+            'key' => 'tags',
+            'value' => $tag['value'],
+            'title' => "${tag['title']} (${tag['count']})",
+        ]])
     @endforeach
     @if ($events->count())
         <h2>{{ $events->total() }}</h2>

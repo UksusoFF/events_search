@@ -26,15 +26,40 @@ class EventController extends Controller
 
         $eventsQuery = $user->events();
 
+        $sources = $user->sources()
+            ->withCount('events')
+            ->get()
+            ->sortByDesc('events_count');
+
+        $sourcesSelected = request()->input('f.sources', []);
+
+        $tags = collect();
+
+        foreach ($sources as $source) {
+            if (in_array($source->id, $sourcesSelected)) {
+                foreach ($source->tags as $tag) {
+                    $tags->push([
+                        'value' => $tag,
+                        'title' => head(explode('|', $tag)),
+                        'count' => (clone $eventsQuery)
+                            ->filter([
+                                'tags' => [
+                                    $tag,
+                                ],
+                            ])
+                            ->count(),
+                    ]);
+                }
+            }
+        };
+
         return view('events.index', [
             'events' => $eventsQuery
                 ->filter($request->input('f', []))
                 ->sortable(['date'])
                 ->paginate(),
-            'sources' => $user->sources()
-                ->withCount('events')
-                ->get()
-                ->sortByDesc('events_count'),
+            'sources' => $sources,
+            'tags' => $tags->sortByDesc('count'),
         ]);
     }
 

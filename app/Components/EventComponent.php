@@ -7,6 +7,7 @@ use App\Sources\HtmlSource;
 use App\Sources\JsonSource;
 use App\Sources\VkCoverSource;
 use App\Sources\VkSearchSource;
+use Exception;
 
 class EventComponent
 {
@@ -34,13 +35,19 @@ class EventComponent
                 break;
         }
 
-        $src->getEvents()->filter(function ($event) {
+        $events = $src->getEvents()->filter(function ($event) {
             return array_has(array_filter($event), [
                 'uuid',
                 'title',
                 'date',
             ]);
-        })->each(function ($event) use ($source) {
+        });
+
+        if ($events->isEmpty()) {
+            throw new Exception('Events not found!');
+        }
+
+        $events->each(function ($event) use ($source) {
             $e = Event::firstOrNew([
                 'uuid' => $event['uuid'],
                 'source_id' => $source->id,
