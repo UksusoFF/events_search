@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Components\EventComponent;
 use App\Models\Event;
 use App\Models\Source;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -76,6 +77,8 @@ class EventController extends Controller
         $user = auth()->user();
 
         $messages = [];
+
+        $user->events()->whereDate('date', '<=', Carbon::yesterday())->delete();
 
         $user->sourcesActive->each(function (Source $source) use (&$messages) {
             try {
