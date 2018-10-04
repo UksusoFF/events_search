@@ -58,6 +58,7 @@
                     <th>Name / Image</th>
                     <th>Source</th>
                     <th class="text-right text-nowrap">@sortablelink('date')</th>
+                    <th class="text-right text-nowrap">@sortablelink('created_at')</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -74,6 +75,7 @@
                         </td>
                         <td class="text-right">{{ $event->source->title }}</td>
                         <td class="text-right">{{ $event->date->format('Y-m-d H:i:s') }}</td>
+                        <td class="text-right">{{ $event->created_at->format('Y-m-d H:i:s') }}</td>
                     </tr>
                 @endforeach
                 </tbody>
