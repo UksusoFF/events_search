@@ -7,6 +7,7 @@ use App\Sources\HtmlSource;
 use App\Sources\JsonSource;
 use App\Sources\VkCoverSource;
 use App\Sources\VkSearchSource;
+use Carbon\Carbon;
 use Exception;
 
 class EventComponent
@@ -61,5 +62,7 @@ class EventComponent
             ]);
             $e->save();
         });
+
+        $source->events()->whereDate('date', '<=', Carbon::yesterday())->delete();
     }
 }
