@@ -61,7 +61,11 @@ class DateTimeHelper
     {
         //TODO: Month required for date format
 
-        if (empty($string) || empty($format)) {
+        if (empty($format)) {
+            return Carbon::now()->endOfMonth()->endOfDay();
+        }
+
+        if (empty($string)) {
             return null;
         }
 
