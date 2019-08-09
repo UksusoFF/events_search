@@ -7,7 +7,7 @@
 @endif
 
 @if (in_array($params['value'], request()->input('f.'.$params['key'], [])))
-    <a href="?{{ http_build_query(array_merge(
+    <a href="/?{{ http_build_query(array_merge(
         request()->except('page', 'f.'.$params['key']),
         [
             'f['.$params['key'].']' => array_filter(request()->input('f.'.$params['key'], []), function($item) use ($params) {
@@ -18,7 +18,7 @@
         {!! $params['title'] !!}
     </a>
 @else
-    <a href="?{{ http_build_query(array_merge(
+    <a href="/?{{ http_build_query(array_merge(
         request()->except('page'),
         [
             'f['.$params['key'].'][]' => $params['value']
