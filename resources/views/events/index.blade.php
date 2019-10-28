@@ -68,6 +68,9 @@
                             <a href="{{ action('EventController@show', $event) }}">
                                 {{ $event->title }}
                             </a>
+                            <a href="{{ $event->url }}">
+                                <i class="fa fa-link"></i>
+                            </a>
                             <hr>
                             <a href="{{ $event->url }}" target="_blank">
                                 <img src="{{ $event->image }}" style="max-width: 200px; max-height: 200px;">
