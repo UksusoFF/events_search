@@ -51,7 +51,7 @@
     @if ($events->count())
         <h2>{{ $events->total() }}</h2>
         {{ $events->appends(request()->except('page'))->links() }}
-        <div class="table-responsive">
+        <div class="table-responsive table-events-index">
             <table class="table table-striped table-hover">
                 <thead>
                 <tr>
