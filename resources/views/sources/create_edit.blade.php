@@ -43,6 +43,20 @@
                                name="tags"
                                value="{{ isset($model['tags']) ? json_encode($model['tags'], JSON_UNESCAPED_UNICODE) : '' }}">
                     </div>
+
+                    <div class="form-group">
+                        <label for="source-{{ $model['id'] or 'new' }}-report">Daily report</label>
+                        <select class="form-control"
+                                id="source-{{ $model['id'] or 'new' }}-report"
+                                name="report">
+                            @foreach(['none', 'updated', 'created'] as $report)
+                                <option value="{{ $report }}"
+                                        {{ isset($model['report']) && $model['report'] === $report ? 'selected' : '' }}>
+                                    {{ $report }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <input type="submit" name="disabled" value="Save &amp; Disable" class="btn btn-secondary">

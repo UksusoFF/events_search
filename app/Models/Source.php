@@ -25,8 +25,13 @@ use Illuminate\Database\Eloquent\Model;
  * @property \Illuminate\Support\Carbon $updated_at
  * @property \Illuminate\Support\Carbon $created_at
  * @property string|null $tags
+ * @property string $report
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Event[] $events
+ * @property-read int|null $events_count
  * @property-read \App\Models\User $user
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Source newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Source newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Source query()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Source whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Source whereDisabled($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Source whereId($value)
@@ -39,6 +44,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Source whereMapItems($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Source whereMapTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Source whereMapUrl($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Source whereReport($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Source whereSource($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Source whereTags($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Source whereTitle($value)
@@ -64,6 +70,7 @@ class Source extends Model
         'map_date_format',
         'map_date_regex',
         'tags',
+        'report',
     ];
 
     protected $dates = [

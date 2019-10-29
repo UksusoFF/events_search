@@ -67,6 +67,7 @@ class SourceController extends Controller
                 'map_date',
                 'map_date_format',
                 'map_date_regex',
+                'report',
             ]));
             $source->tags = json_decode($request->input('tags', '[]'), true);
             $source->disabled = $request->has('disabled');

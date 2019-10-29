@@ -12,12 +12,12 @@ class Kernel extends ConsoleKernel
         EventRefreshCommand::class,
     ];
 
-    protected function schedule(Schedule $schedule)
+    protected function schedule(Schedule $schedule): void
     {
-        //
+        $schedule->command(EventRefreshCommand::class)->dailyAt('2:00');
     }
 
-    protected function commands()
+    protected function commands(): void
     {
         $this->load(__DIR__ . '/Commands');
     }
