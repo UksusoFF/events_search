@@ -39,7 +39,7 @@ class HtmlSource implements SourceInterface
 
         $items = $this->getNode($this->crawler, $this->config->map_items);
 
-        return collect($items->each(function ($node) {
+        return collect($items->each(function($node) {
             return [
                 'uuid' => $this->getNodeUuid($node),
                 'title' => $this->config->map_title ? $this->getNodeValue($node, $this->config->map_title) : null,
@@ -76,14 +76,14 @@ class HtmlSource implements SourceInterface
      */
     protected function getNode(Crawler $node, string $rule)
     {
-        list($type, $selector) = explode('|', $rule);
+        [$type, $selector] = explode('|', $rule);
 
         switch ($type) {
             case 'css':
                 return $node->filter($selector);
             case 'xpath':
                 return $node->filterXPath($selector);
-            default :
+            default:
                 throw new Exception('Invalid filter type');
         }
     }
@@ -105,7 +105,7 @@ class HtmlSource implements SourceInterface
             } elseif ($node->nodeName() == 'a') {
                 $value = $node->link()->getUri();
             } else {
-                $value = implode(PHP_EOL, $node->each(function (Crawler $child) {
+                $value = implode(PHP_EOL, $node->each(function(Crawler $child) {
                     return $child->text();
                 }));
             }

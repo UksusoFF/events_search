@@ -74,7 +74,7 @@ class DateTimeHelper
         }
 
         if (!empty($regex)) {
-            if (preg_match("/$regex/u", $string, $matches)) {
+            if (preg_match("/{$regex}/u", $string, $matches)) {
                 $string = head($matches);
             } else {
                 return null;
@@ -91,7 +91,7 @@ class DateTimeHelper
             $date = Carbon::tomorrow();
         } else {
             try {
-                $date = Carbon::createFromFormat("!$format", $string);
+                $date = Carbon::createFromFormat("!{$format}", $string);
             } catch (Exception $e) {
                 return null;
             }

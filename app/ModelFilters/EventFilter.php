@@ -32,10 +32,10 @@ class EventFilter extends ModelFilter
 
     public function tags($tags)
     {
-        return $this->where(function (Builder $query) use ($tags) {
+        return $this->where(function(Builder $query) use ($tags) {
             foreach (explode('|', implode('|', $tags)) as $tag) {
-                $query->orWhere('events.description', 'LIKE', "%$tag%")
-                    ->orWhere('events.title', 'LIKE', "%$tag%");
+                $query->orWhere('events.description', 'LIKE', "%{$tag}%")
+                    ->orWhere('events.title', 'LIKE', "%{$tag}%");
             }
             return $query;
         });

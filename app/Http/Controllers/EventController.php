@@ -77,7 +77,7 @@ class EventController extends Controller
 
         $messages = [];
 
-        $user->sourcesActive->each(function (Source $source) use (&$messages) {
+        $user->sourcesActive->each(function(Source $source) use (&$messages) {
             try {
                 $this->eventComponent->refresh($source);
                 $messages[] = [

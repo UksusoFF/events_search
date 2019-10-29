@@ -32,7 +32,7 @@ class JsonSource implements SourceInterface
 
         $items = array_get($array, $this->config->map_items, []);
 
-        return collect(array_map(function ($item) {
+        return collect(array_map(function($item) {
             return [
                 'uuid' => $this->getItemUuid($item),
                 'title' => $this->getValueFromNotation($item, $this->config->map_title),

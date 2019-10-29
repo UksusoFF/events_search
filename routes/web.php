@@ -13,12 +13,12 @@
 
 Route::get('/', 'EventController@index')->name('home');
 
-Route::prefix('events')->group(function () {
+Route::prefix('events')->group(function() {
     Route::get('check', 'EventController@check');
     Route::get('{event}/show', 'EventController@show');
 });
 
-Route::prefix('sources')->group(function () {
+Route::prefix('sources')->group(function() {
     Route::post('store', 'SourceController@store');
     Route::post('{source}/update', 'SourceController@update');
 });

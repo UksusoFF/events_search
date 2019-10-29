@@ -3,6 +3,7 @@
 namespace App\Components;
 
 use App\Models\Event;
+use App\Models\Source;
 use App\Sources\HtmlSource;
 use App\Sources\JsonSource;
 use App\Sources\VkCoverSource;
@@ -18,7 +19,7 @@ class EventComponent
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Exception
      */
-    public function refresh($source)
+    public function refresh(Source $source): void
     {
         /* @var \App\Sources\SourceInterface $src */
         switch ($source->type) {
@@ -36,7 +37,7 @@ class EventComponent
                 break;
         }
 
-        $events = $src->getEvents()->filter(function ($event) {
+        $events = $src->getEvents()->filter(function($event) {
             return array_has(array_filter($event), [
                 'uuid',
                 'title',
@@ -48,7 +49,7 @@ class EventComponent
             throw new Exception('Events not found!');
         }
 
-        $events->each(function ($event) use ($source) {
+        $events->each(function($event) use ($source) {
             $e = Event::firstOrNew([
                 'uuid' => $event['uuid'],
                 'source_id' => $source->id,

@@ -16,10 +16,17 @@ use Illuminate\Notifications\Notifiable;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Event[] $events
+ * @property-read int|null $events_count
  * @property-read mixed $avatar
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
+ * @property-read int|null $notifications_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Source[] $sources
+ * @property-read int|null $sources_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Source[] $sourcesActive
+ * @property-read int|null $sources_active_count
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User query()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereEmail($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereId($value)
@@ -52,7 +59,7 @@ class User extends Authenticatable
     public function getAvatarAttribute()
     {
         $hash = md5(strtolower(trim($this->email)));
-        return "https://www.gravatar.com/avatar/$hash";
+        return "https://www.gravatar.com/avatar/{$hash}";
     }
 
     public function sources()
