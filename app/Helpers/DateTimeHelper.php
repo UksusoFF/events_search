@@ -15,21 +15,31 @@ class DateTimeHelper
     private function replaceLocalizedMonthNames(string $string)
     {
         foreach ([
-            '01' => ['yan', 'jan', 'января', 'январь', 'янв'],
-            '02' => ['fev', 'feb', 'февраля', 'февраль', 'фев'],
+            '01' => ['yan', 'jan', 'января', 'январь', 'янв.', 'янв'],
+            '02' => ['fev', 'feb', 'февраля', 'февраль', 'февр.', 'фев'],
             '03' => ['mar', 'марта', 'март', 'мар'],
-            '04' => ['apr', 'апреля', 'апрель', 'апр'],
+            '04' => ['apr', 'апреля', 'апрель', 'апр.', 'апр'],
             '05' => ['may', 'мая', 'май'],
             '06' => ['jun', 'июня', 'июнь', 'июн'],
             '07' => ['jul', 'июля', 'июль', 'июл'],
-            '08' => ['avg', 'aug', 'августа', 'август', 'авг'],
-            '09' => ['sen', 'sep', 'сентября', 'сентябрь', 'сен'],
-            '10' => ['okt', 'oct', 'октября', 'октябрь', 'окт'],
-            '11' => ['nov', 'ноября', 'ноябрь', 'ноя'],
-            '12' => ['dek', 'dec', 'декабря', 'декабрь', 'дек'],
+            '08' => ['avg', 'aug', 'августа', 'август', 'авг.', 'авг'],
+            '09' => ['sen', 'sep', 'сентября', 'сентябрь', 'сен.', 'сен'],
+            '10' => ['okt', 'oct', 'октября', 'октябрь', 'окт.', 'окт'],
+            '11' => ['nov', 'ноября', 'ноябрь', 'нояб.', 'ноя'],
+            '12' => ['dek', 'dec', 'декабря', 'декабрь', 'дек.', 'дек'],
         ] as $month => $monthNames) {
             $string = str_replace($monthNames, $month, mb_strtolower($string));
         }
+
+        return $string;
+    }
+
+    private function removeYears(string $string): string
+    {
+        $string = str_replace([
+            (string)Carbon::now()->year,
+            (string)Carbon::now()->addYear()->year,
+        ], '', mb_strtolower($string));
 
         return $string;
     }
@@ -84,6 +94,12 @@ class DateTimeHelper
         $string = preg_replace('!\s+!', ' ', $string);
 
         $string = $this->replaceLocalizedMonthNames($string);
+
+        if (!str_contains($format, [
+            'Y', 'y',
+        ])) {
+            $string = $this->removeYears($string);
+        }
 
         if ($this->isLocalizedToday($string)) {
             $date = Carbon::today();
