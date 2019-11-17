@@ -4,13 +4,10 @@ namespace App\Sources;
 
 class VkSearchSource extends JsonSource
 {
-    /**
-     * @param array $item
-     *
-     * @return null|string
-     */
-    protected function getItemUrl($item)
+    protected function getItemUrl(array $item): ?string
     {
-        return 'https://vk.com/event' . array_get($item, $this->config->map_id);
+        $value = $this->getValueFromNotation($item, $this->config->map_id);
+
+        return $value ? "https://vk.com/event${value}" : null;
     }
 }

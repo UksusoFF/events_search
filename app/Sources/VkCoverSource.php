@@ -6,23 +6,15 @@ use Illuminate\Support\Carbon;
 
 class VkCoverSource extends JsonSource
 {
-    /**
-     * @param array $item
-     *
-     * @return \Illuminate\Support\Carbon|null
-     */
-    protected function getItemDate($item)
+    protected function getItemDate(array $item): ?Carbon
     {
         return Carbon::now()->lastOfMonth()->setTime(20, 0, 0);
     }
 
-    /**
-     * @param array $item
-     *
-     * @return null|string
-     */
-    protected function getItemUrl($item)
+    protected function getItemUrl(array $item): ?string
     {
-        return 'https://vk.com/' . array_get($item, $this->config->map_url);
+        $value = parent::getItemUrl($item);
+
+        return $value ? "https://vk.com/${value}" : null;
     }
 }

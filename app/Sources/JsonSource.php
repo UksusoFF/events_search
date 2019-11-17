@@ -5,6 +5,8 @@ namespace App\Sources;
 use App\Helpers\DateTimeHelper;
 use App\Models\Source;
 use GuzzleHttp\Client;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Collection;
 
 class JsonSource implements SourceInterface
 {
@@ -23,10 +25,7 @@ class JsonSource implements SourceInterface
         $this->dateTimeHelper = new DateTimeHelper();
     }
 
-    /**
-     * @return \Illuminate\Support\Collection
-     */
-    public function getEvents()
+    public function getEvents(): Collection
     {
         $array = json_decode($this->client->get($this->config->source)->getBody(), true);
 
@@ -38,18 +37,13 @@ class JsonSource implements SourceInterface
                 'title' => $this->getValueFromNotation($item, $this->config->map_title),
                 'url' => $this->getItemUrl($item),
                 'description' => $this->getValueFromNotation($item, $this->config->map_description),
-                'image' => $this->getValueFromNotation($item, $this->config->map_image),
+                'image' => $this->getItemImage($item),
                 'date' => $this->getItemDate($item),
             ];
         }, $items));
     }
 
-    /**
-     * @param array $item
-     *
-     * @return null|string
-     */
-    protected function getItemUuid(array $item)
+    protected function getItemUuid(array $item): ?string
     {
         if (empty($this->config->map_id)) {
             return null;
@@ -66,12 +60,7 @@ class JsonSource implements SourceInterface
         ]);
     }
 
-    /**
-     * @param array $item
-     *
-     * @return \Illuminate\Support\Carbon|null
-     */
-    protected function getItemDate($item)
+    protected function getItemDate(array $item): ?Carbon
     {
         if (empty($this->config->map_date)) {
             return null;
@@ -88,23 +77,17 @@ class JsonSource implements SourceInterface
         );
     }
 
-    /**
-     * @param array $item
-     *
-     * @return null|string
-     */
-    protected function getItemUrl($item)
+    protected function getItemUrl(array $item): ?string
     {
         return $this->getValueFromNotation($item, $this->config->map_url);
     }
 
-    /**
-     * @param array $item
-     * @param string $notation
-     *
-     * @return null|string
-     */
-    protected function getValueFromNotation(array $item, string $notation)
+    protected function getItemImage(array $item): ?string
+    {
+        return $this->getValueFromNotation($item, $this->config->map_image);
+    }
+
+    protected function getValueFromNotation(array $item, string $notation): ?string
     {
         if (empty($notation)) {
             return null;
@@ -114,8 +97,8 @@ class JsonSource implements SourceInterface
 
         if (is_array($data)) {
             return last($data);
-        } else {
-            return $data;
         }
+
+        return $data;
     }
 }

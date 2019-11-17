@@ -4,6 +4,7 @@ namespace App\Components;
 
 use App\Models\Event;
 use App\Models\Source;
+use App\Sources\DvizhSource;
 use App\Sources\HtmlSource;
 use App\Sources\JsonSource;
 use App\Sources\VkCoverSource;
@@ -34,6 +35,9 @@ class EventComponent
                 break;
             case 'vk_search':
                 $src = new VkSearchSource($source);
+                break;
+            case 'dvizh':
+                $src = new DvizhSource($source);
                 break;
         }
 
