@@ -24,7 +24,6 @@ class HtmlSource implements SourceInterface
     {
         $this->config = $source;
         $this->client = new Client();
-        $this->crawler = new Crawler(null, null, $source->source);
         $this->dateTimeHelper = new DateTimeHelper();
     }
 
@@ -35,36 +34,48 @@ class HtmlSource implements SourceInterface
      */
     public function getEvents()
     {
-        $this->getContent();
+        $events = collect();
 
-        $items = $this->getNode($this->crawler, $this->config->map_items);
+        foreach (explode('|', $this->config->source) as $source) {
+            $crawler = $this->getContent($source);
 
-        return collect($items->each(function($node) {
-            return [
-                'uuid' => $this->getNodeUuid($node),
-                'title' => $this->config->map_title ? $this->getNodeValue($node, $this->config->map_title) : null,
-                'url' => $this->getNodeUrl($node),
-                'description' => $this->config->map_description ? $this->getNodeValue($node, $this->config->map_description) : null,
-                'image' => $this->config->map_image ? $this->getNodeValue($node, $this->config->map_image) : null,
-                'date' => $this->getNodeDate($node),
-            ];
-        }));
+            $nodes = $this->getNode($crawler, $this->config->map_items);
+
+            $nodes->each(function($node) use ($events) {
+                $events->push([
+                    'uuid' => $this->getNodeUuid($node),
+                    'title' => $this->config->map_title ? $this->getNodeValue($node, $this->config->map_title) : null,
+                    'url' => $this->getNodeUrl($node),
+                    'description' => $this->config->map_description ? $this->getNodeValue($node, $this->config->map_description) : null,
+                    'image' => $this->config->map_image ? $this->getNodeValue($node, $this->config->map_image) : null,
+                    'date' => $this->getNodeDate($node),
+                ]);
+            });
+        }
+
+        return $events;
     }
 
     /**
-     * @return string
+     * @param string $source
+     *
+     * @return Crawler
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    protected function getContent()
+    protected function getContent(string $source): Crawler
     {
-        $html = (string)($this->client->request('GET', $this->config->source, [
+        $html = (string)($this->client->request('GET', $source, [
             'timeout' => 10,
             'verify' => false,
         ]))->getBody();
 
         preg_match('/\<meta[^\>]+charset *= *["\']?([a-zA-Z\-0-9_:.]+)/i', $html, $charset);
 
-        $this->crawler->addHtmlContent($html, (array_last($charset) ?: 'UTF-8'));
+        $crawler = new Crawler(null, null, $source);
+
+        $crawler->addHtmlContent($html, (array_last($charset) ?: 'UTF-8'));
+
+        return $crawler;
     }
 
     /**
