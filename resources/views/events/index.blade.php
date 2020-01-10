@@ -26,11 +26,12 @@
                 'key' => 'sources',
                 'value' => $source->id,
                 'title' => "{$source->title} ({$source->events_count})",
+                'danger' => $source->disabled,
             ]])
 
             @include('sources.create_edit', [
                 'action' => action('SourceController@update', [
-                    'source' => $source['id'],
+                    'source' => $source->id,
                 ]),
                 'model' => $source,
                 'icon' => 'pencil',

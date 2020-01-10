@@ -23,7 +23,7 @@
         [
             'f['.$params['key'].'][]' => $params['value']
         ]
-    )) }}" class="badge badge-secondary">
+    )) }}" class="badge {{ $params['danger'] ? 'badge-danger' : 'badge-secondary' }}">
         {!! $params['title'] !!}
     </a>
 @endif
