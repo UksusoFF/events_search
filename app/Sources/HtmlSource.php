@@ -3,6 +3,7 @@
 namespace App\Sources;
 
 use App\Helpers\DateTimeHelper;
+use App\Helpers\UrlHelper;
 use App\Models\Source;
 use Exception;
 use GuzzleHttp\Client;
@@ -19,6 +20,10 @@ class HtmlSource implements SourceInterface
     protected $dateTimeHelper;
 
     protected const ID_PREFIX = 'html';
+
+    protected const DATA_ATTRIBUTE_SYMBOL = '?';
+
+    protected const BACKGROUND_STYLE_SYMBOL = '!';
 
     public function __construct(Source $source)
     {
@@ -47,7 +52,7 @@ class HtmlSource implements SourceInterface
                     'title' => $this->config->map_title ? $this->getNodeValue($node, $this->config->map_title) : null,
                     'url' => $this->getNodeUrl($node),
                     'description' => $this->config->map_description ? $this->getNodeValue($node, $this->config->map_description) : null,
-                    'image' => $this->config->map_image ? $this->getNodeValue($node, $this->config->map_image) : null,
+                    'image' => $this->getNodeImage($node),
                     'date' => $this->getNodeDate($node),
                 ]);
             });
@@ -108,10 +113,16 @@ class HtmlSource implements SourceInterface
      */
     protected function getNodeValue(Crawler $parent, string $rule)
     {
+        if (str_contains($rule, self::DATA_ATTRIBUTE_SYMBOL)) {
+            [$rule, $attr] = explode(self::DATA_ATTRIBUTE_SYMBOL, $rule);
+        }
+
         $node = $this->getNode($parent, $rule);
 
         if ($node->count()) {
-            if ($node->nodeName() == 'img') {
+            if (!empty($attr)) {
+                $value = $node->attr($attr);
+            } elseif ($node->nodeName() == 'img') {
                 $value = $node->image()->getUri();
             } elseif ($node->nodeName() == 'a') {
                 $value = $node->link()->getUri();
@@ -120,6 +131,7 @@ class HtmlSource implements SourceInterface
                     return $child->text();
                 }));
             }
+
             return trim(str_replace("\xc2\xa0", ' ', $value));
         } else {
             return null;
@@ -185,5 +197,34 @@ class HtmlSource implements SourceInterface
         }
 
         return $this->getNodeValue($node, $this->config->map_url);
+    }
+
+    /**
+     * @param $node
+     *
+     * @return null|string
+     * @throws \Exception
+     */
+    protected function getNodeImage($node): ?string
+    {
+        if (empty($this->config->map_image)) {
+            return null;
+        }
+
+        if (ends_with($this->config->map_image, self::BACKGROUND_STYLE_SYMBOL)) {
+            $node = $this->getNode($node, trim($this->config->map_image, self::BACKGROUND_STYLE_SYMBOL));
+
+            $style = $node->attr('style');
+            $pattern = '/background-image:\s*url\(\s*([\'"]*)(?P<file>[^\1]+)\1\s*\)/i';
+            $matches = [];
+
+            if (preg_match($pattern, $style, $matches)) {
+                return UrlHelper::relToAbs($matches['file'], $this->config->source);
+            }
+
+            return null;
+        }
+
+        return $this->getNodeValue($node, $this->config->map_image);
     }
 }
