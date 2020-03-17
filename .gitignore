@@ -18,5 +18,4 @@ yarn-error.log
 /public/fonts/*
 /public/adminer
 _ide_helper.php
-package-lock.json
 TODO.md
