@@ -29,6 +29,6 @@ class TaplinkSource extends JsonSource
     {
         $value = $this->getValueFromNotation($item, $this->config->map_image);
 
-        return $value ? "https://s.taplink.ru/${value}" : null;
+        return $value ? "https://s.taplink.ru/p/${value}" : null;
     }
 }
