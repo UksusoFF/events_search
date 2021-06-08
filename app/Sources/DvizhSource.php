@@ -4,10 +4,8 @@ namespace App\Sources;
 
 class DvizhSource extends JsonSource
 {
-    protected function getItemImage(array $item): ?string
+    protected function getItemUrl(array $item): ?string
     {
-        $value = parent::getItemImage($item);
-
-        return $value ? "https://dvizh.app/${value}" : null;
+        return $this->config->source;
     }
 }

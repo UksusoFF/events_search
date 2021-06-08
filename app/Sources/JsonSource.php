@@ -25,22 +25,32 @@ class JsonSource implements SourceInterface
         $this->dateTimeHelper = new DateTimeHelper();
     }
 
+    protected function getSources(): array {
+        return (explode('|', $this->config->source));
+    }
+
     public function getEvents(): Collection
     {
-        $array = json_decode($this->client->get($this->config->source)->getBody(), true);
+        $events = collect();
 
-        $items = array_get($array, $this->config->map_items, []);
+        foreach ($this->getSources() as $source) {
+            $array = json_decode($this->client->get($source)->getBody(), true);
 
-        return collect(array_map(function($item) {
-            return [
-                'uuid' => $this->getItemUuid($item),
-                'title' => $this->getValueFromNotation($item, $this->config->map_title),
-                'url' => $this->getItemUrl($item),
-                'description' => $this->getValueFromNotation($item, $this->config->map_description),
-                'image' => $this->getItemImage($item),
-                'date' => $this->getItemDate($item),
-            ];
-        }, $items));
+            $items = array_get($array, $this->config->map_items, []);
+
+            foreach ($items as $item) {
+                $events->push([
+                    'uuid' => $this->getItemUuid($item),
+                    'title' => $this->getValueFromNotation($item, $this->config->map_title),
+                    'url' => $this->getItemUrl($item),
+                    'description' => $this->getValueFromNotation($item, $this->config->map_description),
+                    'image' => $this->getItemImage($item),
+                    'date' => $this->getItemDate($item),
+                ]);
+            }
+        }
+
+        return $events;
     }
 
     protected function getItemUuid(array $item): ?string

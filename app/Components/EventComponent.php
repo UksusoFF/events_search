@@ -7,6 +7,7 @@ use App\Models\Source;
 use App\Sources\DvizhSource;
 use App\Sources\HtmlSource;
 use App\Sources\JsonSource;
+use App\Sources\TaplinkSource;
 use App\Sources\VkCoverSource;
 use App\Sources\VkSearchSource;
 use Carbon\Carbon;
@@ -38,6 +39,9 @@ class EventComponent
                 break;
             case 'dvizh':
                 $src = new DvizhSource($source);
+                break;
+            case 'taplink':
+                $src = new TaplinkSource($source);
                 break;
         }
 

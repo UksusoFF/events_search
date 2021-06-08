@@ -7,6 +7,7 @@ use App\Helpers\UrlHelper;
 use App\Models\Source;
 use Exception;
 use GuzzleHttp\Client;
+use Illuminate\Support\Collection;
 use Symfony\Component\DomCrawler\Crawler;
 
 class HtmlSource implements SourceInterface
@@ -32,16 +33,15 @@ class HtmlSource implements SourceInterface
         $this->dateTimeHelper = new DateTimeHelper();
     }
 
-    /**
-     * @return \Illuminate\Support\Collection
-     * @throws \Exception
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     */
-    public function getEvents()
+    protected function getSources(): array {
+        return (explode('|', $this->config->source));
+    }
+
+    public function getEvents(): Collection
     {
         $events = collect();
 
-        foreach (explode('|', $this->config->source) as $source) {
+        foreach ($this->getSources() as $source) {
             $crawler = $this->getContent($source);
 
             $nodes = $this->getNode($crawler, $this->config->map_items);
@@ -61,12 +61,6 @@ class HtmlSource implements SourceInterface
         return $events;
     }
 
-    /**
-     * @param string $source
-     *
-     * @return Crawler
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     */
     protected function getContent(string $source): Crawler
     {
         $html = (string)($this->client->request('GET', $source, [
@@ -104,14 +98,7 @@ class HtmlSource implements SourceInterface
         }
     }
 
-    /**
-     * @param \Symfony\Component\DomCrawler\Crawler $parent
-     * @param string $rule
-     *
-     * @return null|string
-     * @throws \Exception
-     */
-    protected function getNodeValue(Crawler $parent, string $rule)
+    protected function getNodeValue(Crawler $parent, string $rule): ?string
     {
         if (str_contains($rule, self::DATA_ATTRIBUTE_SYMBOL)) {
             [$rule, $attr] = explode(self::DATA_ATTRIBUTE_SYMBOL, $rule);
@@ -138,13 +125,7 @@ class HtmlSource implements SourceInterface
         }
     }
 
-    /**
-     * @param \Symfony\Component\DomCrawler\Crawler $node
-     *
-     * @return null|string
-     * @throws \Exception
-     */
-    protected function getNodeUuid(Crawler $node)
+    protected function getNodeUuid(Crawler $node): ?string
     {
         if (empty($this->config->map_id)) {
             return null;
@@ -161,13 +142,7 @@ class HtmlSource implements SourceInterface
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\DomCrawler\Crawler $node
-     *
-     * @return \Illuminate\Support\Carbon|null
-     * @throws \Exception
-     */
-    protected function getNodeDate(Crawler $node)
+    protected function getNodeDate(Crawler $node): ?string
     {
         if (empty($this->config->map_date)) {
             return null;
@@ -184,13 +159,7 @@ class HtmlSource implements SourceInterface
         );
     }
 
-    /**
-     * @param $node
-     *
-     * @return null|string
-     * @throws \Exception
-     */
-    protected function getNodeUrl($node)
+    protected function getNodeUrl($node): ?string
     {
         if (empty($this->config->map_url)) {
             return $this->config->source;
@@ -199,12 +168,6 @@ class HtmlSource implements SourceInterface
         return $this->getNodeValue($node, $this->config->map_url);
     }
 
-    /**
-     * @param $node
-     *
-     * @return null|string
-     * @throws \Exception
-     */
     protected function getNodeImage($node): ?string
     {
         if (empty($this->config->map_image)) {
