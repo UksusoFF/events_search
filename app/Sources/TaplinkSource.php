@@ -4,6 +4,10 @@ namespace App\Sources;
 
 class TaplinkSource extends JsonSource
 {
+    protected function getItemUrl(array $item): ?string
+    {
+        return str_replace('api/market/products/list.json', 'm', $this->config->source);
+    }
 
     protected function getSources(): array
     {
